@@ -7,6 +7,7 @@ import {
   Check,
   Mail,
   MapPin,
+  Menu,
   Minus,
   Phone,
   Plus,
@@ -107,6 +108,7 @@ const navItems = [
   { label: "Tratamientos", href: "#tratamientos" },
   { label: "Productos", href: "#productos" },
   { label: "Contacto", href: "#contacto" },
+  { label: "Sobre mí", href: "#sobre-mi" },
 ]
 
 const whatsappNumber = "17866170823"
@@ -119,6 +121,7 @@ export default function Home() {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
   const [selectedService, setSelectedService] = useState<ServiceGroup | null>(null)
   const [addedProduct, setAddedProduct] = useState<Product | null>(null)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   const cartCount = useMemo(() => cart.reduce((total, item) => total + item.quantity, 0), [cart])
   function addToCart(product: Product) {
@@ -171,21 +174,67 @@ export default function Home() {
               </a>
             ))}
           </div>
-          <button
-            type="button"
-            onClick={() => setCartOpen(true)}
-            className="relative flex items-center gap-2 text-xs font-medium tracking-[0.14em]"
-            aria-label={`Abrir carrito con ${cartCount} productos`}
-          >
-            <ShoppingBag size={18} strokeWidth={1.5} />
-            <span className="hidden sm:inline">CARRITO</span>
-            {cartCount > 0 && (
-              <span className="absolute -top-3 -right-3 flex size-5 items-center justify-center rounded-full bg-brand-champagne text-[10px]">
-                {cartCount}
-              </span>
-            )}
-          </button>
+          <div className="flex items-center gap-5">
+            <button
+              type="button"
+              onClick={() => setCartOpen(true)}
+              className="relative flex items-center gap-2 text-xs font-medium tracking-[0.14em]"
+              aria-label={`Abrir carrito con ${cartCount} productos`}
+            >
+              <ShoppingBag size={18} strokeWidth={1.5} />
+              <span className="hidden sm:inline">CARRITO</span>
+              {cartCount > 0 && (
+                <span className="absolute -top-3 -right-3 flex size-5 items-center justify-center rounded-full bg-brand-champagne text-[10px]">
+                  {cartCount}
+                </span>
+              )}
+            </button>
+            <button
+              type="button"
+              onClick={() => setMobileMenuOpen(true)}
+              className="sm:hidden"
+              aria-label="Abrir menú de navegación"
+              aria-expanded={mobileMenuOpen}
+            >
+              <Menu size={21} strokeWidth={1.5} />
+            </button>
+          </div>
         </nav>
+        {mobileMenuOpen && (
+          <div className="fixed inset-0 z-50 sm:hidden" role="dialog" aria-modal="true" aria-label="Menú de navegación">
+            <button
+              type="button"
+              className="absolute inset-0 bg-brand-navy/25"
+              aria-label="Cerrar menú"
+              onClick={() => setMobileMenuOpen(false)}
+            />
+            <div className="absolute top-0 right-0 h-full w-[min(21rem,88vw)] bg-brand-white px-7 py-6 shadow-2xl">
+              <div className="flex items-center justify-between border-b border-brand-steel/20 pb-6">
+                <span className="text-xs font-medium tracking-[0.18em] text-brand-steel">NAVEGACIÓN</span>
+                <button
+                  type="button"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="text-brand-navy"
+                  aria-label="Cerrar menú de navegación"
+                >
+                  <X size={21} strokeWidth={1.5} />
+                </button>
+              </div>
+              <div className="flex flex-col gap-7 pt-10">
+                {navItems.map((item) => (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="text-2xl font-medium tracking-[-0.03em] text-brand-navy"
+                  >
+                    {item.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
       </header>
 
       <main>
@@ -378,6 +427,48 @@ export default function Home() {
               Escribir por WhatsApp
               <ArrowUpRight size={16} />
             </a>
+          </div>
+        </section>
+
+        <section id="sobre-mi" className="border-t border-brand-steel/20 bg-brand-white">
+          <div className="mx-auto grid max-w-7xl gap-12 px-6 py-20 sm:py-28 lg:grid-cols-[0.8fr_1.2fr] lg:items-center lg:px-10">
+            <div className="relative aspect-[4/5] overflow-hidden bg-brand-steel/10">
+              <Image
+                src="/media/acercademi.jpeg"
+                alt="Arecio Rodríguez, especialista en estética facial y corporal"
+                fill
+                className="object-contain"
+                sizes="(max-width: 1024px) 100vw, 35vw"
+              />
+            </div>
+            <div>
+              <p className="mb-4 text-xs font-medium tracking-[0.24em] text-brand-steel">05 / SOBRE MÍ</p>
+              <h2 className="max-w-2xl text-4xl font-medium tracking-[-0.04em] sm:text-6xl">
+                Arecio Rodríguez
+              </h2>
+              <p className="mt-5 text-sm font-medium tracking-[0.08em] text-brand-steel">
+                Especialista en Estética Facial y Corporal | Florida Certified Full Specialist
+              </p>
+              <div className="mt-8 max-w-2xl space-y-5 text-base leading-relaxed text-brand-steel">
+                <p>
+                  Con más de 10 años de experiencia en estética facial y corporal, especialista en el cuidado y
+                  transformación de la piel mediante tratamientos personalizados y orientados a resultados.
+                </p>
+                <p>
+                  Certificado como Full Specialist en el estado de Florida, cuenta con amplia experiencia en
+                  tratamientos para acné, hiperpigmentación, manchas, cicatrices, textura irregular y signos del
+                  envejecimiento, combinando técnicas profesionales, activos especializados y tecnología estética
+                  avanzada.
+                </p>
+                <p>
+                  Su filosofía va más allá de la belleza: cada tratamiento busca mejorar la salud, apariencia y
+                  calidad de la piel, ayudando también a fortalecer la seguridad y confianza de cada cliente.
+                </p>
+              </div>
+              <blockquote className="mt-9 border-l-2 border-brand-champagne pl-5 text-xl leading-relaxed text-brand-navy sm:text-2xl">
+                “La estética no es solo vanidad; es salud, bienestar y confianza en tu propia piel.”
+              </blockquote>
+            </div>
           </div>
         </section>
       </main>
