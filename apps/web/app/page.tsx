@@ -310,7 +310,7 @@ export default function Home() {
                   type="button"
                   id={group.id}
                   onClick={() => setSelectedService(group)}
-                  className="group text-left"
+                  className="group cursor-pointer text-left focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-champagne"
                   aria-label={`Ver información de ${group.title}`}
                 >
                   <Card className="gap-0 overflow-hidden rounded-none border-brand-navy/20 bg-brand-white p-0 text-brand-navy shadow-none transition-shadow group-hover:shadow-lg">
@@ -469,7 +469,7 @@ export default function Home() {
         </div>
       </footer>
 
-      {/* Notificación, modal y carrito de Productos: conservar para activación futura.
+      {/* Notificación de Productos: conservar para activación futura.
       {addedProduct && (
         <div className="fixed top-5 right-5 z-[60] w-[min(22rem,calc(100vw-2.5rem))] border border-brand-steel/20 bg-brand-white p-4 shadow-2xl">
           <div className="flex items-start gap-3">
@@ -499,6 +499,9 @@ export default function Home() {
         </div>
       )}
 
+      */}
+
+      {/* Modal de producto: conservar para activación futura.
       {selectedProduct && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-5">
           <button
@@ -544,6 +547,7 @@ export default function Home() {
           </article>
         </div>
       )}
+      */}
 
       {selectedService && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-5">
@@ -585,10 +589,7 @@ export default function Home() {
                     <ol className="grid gap-3 text-sm leading-relaxed text-brand-navy">
                       {treatment.protocol.map((step, index) => (
                         <li key={step}>
-                          {selectedService.title === "Tratamientos faciales" &&
-                          treatment.title === "Limpieza Facial Profunda"
-                            ? `${index + 1}. ${step}`
-                            : step}
+                          {`${index + 1}. ${step}`}
                         </li>
                       ))}
                     </ol>
@@ -630,6 +631,7 @@ export default function Home() {
         </div>
       )}
 
+      {/* Panel del carrito: conservar para activación futura.
       {cartOpen && (
         <div className="fixed inset-0 z-50">
           <button
