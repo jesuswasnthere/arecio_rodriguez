@@ -1,22 +1,17 @@
 "use client"
 
 import Image from "next/image"
-import { useMemo, useState } from "react"
+import { useState } from "react"
 import {
   ArrowUpRight,
   Check,
   Mail,
   MapPin,
   Menu,
-  Minus,
   Phone,
-  Plus,
-  ShoppingBag,
-  Trash2,
   X,
 } from "lucide-react"
 
-import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 interface ServiceGroup {
@@ -24,9 +19,18 @@ interface ServiceGroup {
   title: string
   intro: string
   services: string[]
-  image: string
+  featuredTreatments?: TreatmentDetail[]
 }
 
+interface TreatmentDetail {
+  title: string
+  description: string
+  protocol: string[]
+  duration: string
+  beforeAfterImage: string
+}
+
+/* Productos y carrito: conservar para activar cuando se habilite el catálogo.
 interface Product {
   id: string
   name: string
@@ -38,34 +42,15 @@ interface Product {
 interface CartItem extends Product {
   quantity: number
 }
+*/
 
 const serviceGroups: ServiceGroup[] = [
   {
-    id: "treatments",
-    title: "Tratamientos",
-    intro: "Protocolos específicos para transformar la salud y apariencia de tu piel.",
+    id: "tratamientos-faciales",
+    title: "Tratamientos faciales",
+    intro: "Protocolos personalizados para transformar la salud y apariencia de la piel del rostro.",
     services: [
-      "Acné",
-      "Antiedad",
-      "Manchas",
-      "Radiofrecuencia",
-      "Plasma rico en plaquetas",
-      "Cicatrices",
-      "Peeling químico",
-      "Microneedling o Dermapen",
-      "Eliminación de verrugas y lunares",
-      "Exoxomas",
-      "Láser Picosecond",
-      "Carbón láser",
-      "Biopen",
-    ],
-    image: "/media/services-menu.jpg",
-  },
-  {
-    id: "facials",
-    title: "Faciales",
-    intro: "Sesiones personalizadas para limpiar, renovar, hidratar y devolver luminosidad.",
-    services: [
+      "Limpieza Facial Regular",
       "Facial profundo",
       "Facial con Dermaplaning",
       "Facial con Carboxiterapia",
@@ -76,17 +61,74 @@ const serviceGroups: ServiceGroup[] = [
       "Facial con Exoxomas",
       "Facial Detox",
     ],
-    image: "/media/facial-treatment.jpg",
+    featuredTreatments: [
+      {
+        title: "Limpieza Facial Regular",
+        description:
+          "Tratamiento esencial para mantener una piel limpia, fresca y equilibrada, ayudando a eliminar impurezas, células muertas y exceso de grasa para mejorar su apariencia y textura.",
+        protocol: [
+          "Limpieza — Preparación y limpieza de la piel.",
+          "Exfoliación — Eliminación de células muertas y renovación superficial.",
+          "Vapor — Preparación de la piel para facilitar las extracciones.",
+          "Extracciones — Remoción cuidadosa de comedones e impurezas.",
+          "Hidratación y nutrición — Aplicación de vitaminas y antioxidantes para hidratar, nutrir y revitalizar la piel.",
+          "Mascarilla — Seleccionada según las necesidades y características de cada tipo de piel.",
+          "Tonificación — Ayuda a equilibrar, refrescar y preparar la piel para finalizar el tratamiento.",
+          "Protección solar — Aplicación final para proteger la piel frente a la exposición solar.",
+        ],
+        duration: "60 minutos",
+        beforeAfterImage: "/media/before_after/limpieza_facial_regular.jpeg",
+      },
+      {
+        title: "Limpieza Facial Profunda",
+        description:
+          "Tratamiento profesional diseñado para realizar una limpieza intensiva de la piel, eliminar impurezas y células muertas, descongestionar los poros y mejorar la textura, hidratación y luminosidad del rostro.",
+        protocol: [
+          "Limpieza de la piel",
+          "Exfoliación",
+          "Vapor",
+          "Peeling enzimático",
+          "Extracciones",
+          "Alta frecuencia",
+          "Microdermoabrasión con punta de diamante",
+          "Fototerapia LED",
+          "Hidratación y nutrición de la piel",
+          "Mascarilla facial",
+          "Tonificación",
+          "Protección solar",
+        ],
+        duration: "1 hora y 30 minutos",
+        beforeAfterImage: "/media/before_after/limpieza_facial_profunda.jpeg",
+      },
+    ],
+  },
+  {
+    id: "tratamientos-corporales",
+    title: "Tratamientos corporales",
+    intro: "Técnicas y tecnología estética para cuidar, renovar y mejorar la apariencia de la piel corporal.",
+    services: [
+      "Radiofrecuencia",
+      "Plasma rico en plaquetas",
+      "Tratamiento de cicatrices",
+      "Peeling químico",
+      "Microneedling o Dermapen",
+      "Eliminación de verrugas y lunares",
+      "Exoxomas",
+      "Láser Picosecond",
+      "Carbón láser",
+      "Biopen",
+    ],
   },
 ]
 
+/* Catálogo futuro.
 const products: Product[] = [
   {
     id: "facial-kit",
     name: "Ritual Facial Esencial",
     category: "RUTINA EN CASA",
     description: "Una selección de cuidado diario para limpiar, hidratar y proteger tu piel.",
-    image: "/media/portrait-blue-1.jpg",
+    image: "/media/skin-specialist.jpg",
   },
   {
     id: "renewal-serum",
@@ -103,12 +145,13 @@ const products: Product[] = [
     image: "/media/portrait-blue-3.jpg",
   },
 ]
+*/
 
 const navItems = [
-  { label: "Tratamientos", href: "#tratamientos" },
-  { label: "Productos", href: "#productos" },
-  { label: "Contacto", href: "#contacto" },
-  { label: "Sobre mí", href: "#sobre-mi" },
+  { label: "Faciales", href: "#tratamientos-faciales" },
+  { label: "Corporales", href: "#tratamientos-corporales" },
+  { label: "Sobre mí", href: "/sobre-mi" },
+  // { label: "Productos", href: "#productos" }, // Próximamente
 ]
 
 const whatsappNumber = "17866170823"
@@ -116,14 +159,10 @@ const consultationFormUrl =
   "https://docs.google.com/forms/d/e/1FAIpQLSfe5g5Mb8y4f6dcsQYQPGOseGvbJt2HKMeL8JF7io0pB-62fg/viewform"
 
 export default function Home() {
-  const [cart, setCart] = useState<CartItem[]>([])
-  const [cartOpen, setCartOpen] = useState(false)
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
   const [selectedService, setSelectedService] = useState<ServiceGroup | null>(null)
-  const [addedProduct, setAddedProduct] = useState<Product | null>(null)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
-  const cartCount = useMemo(() => cart.reduce((total, item) => total + item.quantity, 0), [cart])
+  /* Lógica de carrito reservada para la futura sección Productos.
   function addToCart(product: Product) {
     setCart((current) => {
       const existing = current.find((item) => item.id === product.id)
@@ -156,6 +195,7 @@ export default function Home() {
     const message = `Hola Arecio, quiero consultar por estos servicios:\n\n${order}`
     window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, "_blank")
   }
+  */
 
   return (
     <div className="min-h-screen bg-brand-white text-brand-navy">
@@ -175,20 +215,6 @@ export default function Home() {
             ))}
           </div>
           <div className="flex items-center gap-5">
-            <button
-              type="button"
-              onClick={() => setCartOpen(true)}
-              className="relative flex items-center gap-2 text-xs font-medium tracking-[0.14em]"
-              aria-label={`Abrir carrito con ${cartCount} productos`}
-            >
-              <ShoppingBag size={18} strokeWidth={1.5} />
-              <span className="hidden sm:inline">CARRITO</span>
-              {cartCount > 0 && (
-                <span className="absolute -top-3 -right-3 flex size-5 items-center justify-center rounded-full bg-brand-champagne text-[10px]">
-                  {cartCount}
-                </span>
-              )}
-            </button>
             <button
               type="button"
               onClick={() => setMobileMenuOpen(true)}
@@ -238,7 +264,7 @@ export default function Home() {
       </header>
 
       <main>
-        <section className="mx-auto grid max-w-7xl gap-12 px-6 py-16 sm:py-24 lg:grid-cols-[1.15fr_0.85fr] lg:items-end lg:px-10 lg:py-32">
+        <section className="mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-10 lg:py-32">
           <div>
             <p className="mb-8 text-xs font-medium tracking-[0.28em] text-brand-steel">
               ADVANCED SKIN AESTHETICS
@@ -247,7 +273,7 @@ export default function Home() {
               La piel bien cuidada se nota.
             </h1>
             <p className="mt-8 max-w-lg text-lg leading-relaxed text-brand-steel">
-              Cuidado facial experto, protocolos precisos y productos seleccionados para continuar el cuidado en casa.
+              Cuidado facial experto, protocolos precisos y acompañamiento personalizado para tu piel.
             </p>
             <div className="mt-10 flex flex-col items-start gap-5 sm:flex-row sm:items-center">
               <a
@@ -262,55 +288,32 @@ export default function Home() {
               </span>
             </div>
           </div>
-          <div className="relative aspect-[4/5] overflow-hidden bg-brand-navy">
-            <Image
-              src="/media/hero-blue.jpg"
-              alt="Arecio Rodríguez, especialista facial"
-              fill
-              priority
-              className="object-cover object-center"
-              sizes="(max-width: 1024px) 100vw, 40vw"
-            />
-            <div className="absolute inset-5 border border-brand-champagne/50" />
-            <div className="absolute inset-x-10 bottom-10 text-brand-white">
-              <p className="mb-2 text-xs tracking-[0.2em] text-brand-champagne">EST. 2024 / FL</p>
-              <p className="text-sm leading-relaxed text-white/80">
-                Resultados que se sienten tan bien como se ven.
-              </p>
-            </div>
-          </div>
         </section>
 
-        <section id="tratamientos" className="border-t border-brand-steel/20 bg-white">
+        <section id="servicios" className="border-t border-brand-steel/20 bg-white">
           <div className="mx-auto max-w-7xl px-6 py-20 sm:py-28 lg:px-10">
             <div className="mb-12 flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
               <div>
                 <p className="mb-4 text-xs font-medium tracking-[0.24em] text-brand-steel">01 / SERVICIOS</p>
-                <h2 className="text-4xl font-medium tracking-[-0.04em] sm:text-5xl">Tratamientos con intención.</h2>
+                <h2 className="text-4xl font-medium tracking-[-0.04em] sm:text-5xl">
+                  Tratamientos faciales y corporales.
+                </h2>
               </div>
               <p className="max-w-sm text-sm leading-relaxed text-brand-steel">
                 Cada sesión comienza con una lectura detallada de tu piel y termina con un plan claro.
               </p>
             </div>
-            <div className="grid gap-5 lg:grid-cols-2">
+            <div className="grid gap-10">
               {serviceGroups.map((group, index) => (
                 <button
                   key={group.id}
                   type="button"
+                  id={group.id}
                   onClick={() => setSelectedService(group)}
                   className="group text-left"
                   aria-label={`Ver información de ${group.title}`}
                 >
                   <Card className="gap-0 overflow-hidden rounded-none border-brand-navy/20 bg-brand-white p-0 text-brand-navy shadow-none transition-shadow group-hover:shadow-lg">
-                    <div className="relative aspect-[4/3] overflow-hidden bg-brand-white">
-                      <Image
-                        src={group.image}
-                        alt={group.title}
-                        fill
-                        className="object-contain object-center transition-transform duration-700 ease-out group-hover:scale-[1.02]"
-                        sizes="(max-width: 1024px) 100vw, 50vw"
-                      />
-                    </div>
                     <CardHeader className="flex flex-row items-start justify-between gap-6 px-8 pt-8">
                       <div>
                         <span className="text-xs tracking-[0.24em] text-brand-steel">0{index + 1} / SERVICIO</span>
@@ -331,6 +334,7 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Productos: sección reservada para una futura etapa del sitio.
         <section id="productos" className="bg-brand-white">
           <div className="mx-auto max-w-7xl px-6 py-20 sm:py-28 lg:px-10">
             <div className="mb-12 flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
@@ -378,20 +382,11 @@ export default function Home() {
               ))}
             </div>
           </div>
-        </section>
+        </section> */}
 
         <section className="relative overflow-hidden bg-brand-navy text-brand-white">
-          <div className="mx-auto grid max-w-7xl gap-10 px-6 py-20 sm:py-24 lg:grid-cols-[0.8fr_1.2fr] lg:items-center lg:px-10">
-            <div className="relative aspect-[4/3] overflow-hidden">
-              <Image
-                src="/media/portrait.jpg"
-                alt="Arecio Rodríguez realizando un tratamiento facial"
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 35vw"
-              />
-            </div>
-            <div>
+          <div className="mx-auto max-w-7xl px-6 py-20 sm:py-24 lg:px-10">
+            <div className="max-w-3xl">
               <p className="mb-4 text-xs font-medium tracking-[0.24em] text-brand-champagne">03 / CONFIANZA</p>
               <h2 className="max-w-2xl text-4xl font-medium tracking-[-0.04em] sm:text-6xl">
                 Tu piel merece un plan, no una promesa.
@@ -430,47 +425,6 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="sobre-mi" className="border-t border-brand-steel/20 bg-brand-white">
-          <div className="mx-auto grid max-w-7xl gap-12 px-6 py-20 sm:py-28 lg:grid-cols-[0.8fr_1.2fr] lg:items-center lg:px-10">
-            <div className="relative aspect-[4/5] overflow-hidden bg-brand-steel/10">
-              <Image
-                src="/media/acercademi.jpeg"
-                alt="Arecio Rodríguez, especialista en estética facial y corporal"
-                fill
-                className="object-contain"
-                sizes="(max-width: 1024px) 100vw, 35vw"
-              />
-            </div>
-            <div>
-              <p className="mb-4 text-xs font-medium tracking-[0.24em] text-brand-steel">05 / SOBRE MÍ</p>
-              <h2 className="max-w-2xl text-4xl font-medium tracking-[-0.04em] sm:text-6xl">
-                Arecio Rodríguez
-              </h2>
-              <p className="mt-5 text-sm font-medium tracking-[0.08em] text-brand-steel">
-                Especialista en Estética Facial y Corporal | Florida Certified Full Specialist
-              </p>
-              <div className="mt-8 max-w-2xl space-y-5 text-base leading-relaxed text-brand-steel">
-                <p>
-                  Con más de 10 años de experiencia en estética facial y corporal, especialista en el cuidado y
-                  transformación de la piel mediante tratamientos personalizados y orientados a resultados.
-                </p>
-                <p>
-                  Certificado como Full Specialist en el estado de Florida, cuenta con amplia experiencia en
-                  tratamientos para acné, hiperpigmentación, manchas, cicatrices, textura irregular y signos del
-                  envejecimiento, combinando técnicas profesionales, activos especializados y tecnología estética
-                  avanzada.
-                </p>
-                <p>
-                  Su filosofía va más allá de la belleza: cada tratamiento busca mejorar la salud, apariencia y
-                  calidad de la piel, ayudando también a fortalecer la seguridad y confianza de cada cliente.
-                </p>
-              </div>
-              <blockquote className="mt-9 border-l-2 border-brand-champagne pl-5 text-xl leading-relaxed text-brand-navy sm:text-2xl">
-                “La estética no es solo vanidad; es salud, bienestar y confianza en tu propia piel.”
-              </blockquote>
-            </div>
-          </div>
-        </section>
       </main>
 
       <footer className="bg-brand-navy text-brand-white">
@@ -496,7 +450,7 @@ export default function Home() {
           <div className="space-y-4 text-sm text-brand-steel">
             <p className="text-xs tracking-[0.18em] text-brand-champagne">ATENCIÓN</p>
             <p className="flex items-center gap-2"><Check size={15} /> Skin Care Specialist</p>
-            <p className="flex items-center gap-2"><Check size={15} /> Compra coordinada personalmente</p>
+            <p className="flex items-center gap-2"><Check size={15} /> Atención personalizada</p>
             <a
               href={consultationFormUrl}
               target="_blank"
@@ -515,6 +469,7 @@ export default function Home() {
         </div>
       </footer>
 
+      {/* Notificación, modal y carrito de Productos: conservar para activación futura.
       {addedProduct && (
         <div className="fixed top-5 right-5 z-[60] w-[min(22rem,calc(100vw-2.5rem))] border border-brand-steel/20 bg-brand-white p-4 shadow-2xl">
           <div className="flex items-start gap-3">
@@ -598,16 +553,7 @@ export default function Home() {
             className="absolute inset-0 bg-brand-navy/50 backdrop-blur-sm"
             onClick={() => setSelectedService(null)}
           />
-          <article className="relative grid max-h-[90vh] w-full max-w-5xl overflow-y-auto bg-brand-white md:grid-cols-[0.9fr_1.1fr]">
-            <div className="relative min-h-[20rem] bg-brand-navy md:min-h-[36rem]">
-              <Image
-                src={selectedService.image}
-                alt={selectedService.title}
-                fill
-                className="object-cover object-center"
-                sizes="(max-width: 768px) 100vw, 45vw"
-              />
-            </div>
+          <article className="relative max-h-[90vh] w-full max-w-5xl overflow-y-auto bg-brand-white">
             <div className="p-7 sm:p-10">
               <button
                 type="button"
@@ -620,6 +566,46 @@ export default function Home() {
               <p className="text-xs tracking-[0.2em] text-brand-steel">SERVICIOS ESPECIALIZADOS</p>
               <h2 className="mt-4 text-4xl font-medium tracking-[-0.04em]">{selectedService.title}</h2>
               <p className="mt-6 max-w-lg text-base leading-relaxed text-brand-steel">{selectedService.intro}</p>
+              {selectedService.featuredTreatments?.map((treatment) => (
+                <div key={treatment.title} className="mt-8 grid gap-8 border-t border-brand-steel/20 pt-8 md:grid-cols-[0.8fr_1.2fr]">
+                  <div className="relative overflow-hidden bg-brand-white">
+                    <Image
+                      src={treatment.beforeAfterImage}
+                      alt={`Antes y después de ${treatment.title}`}
+                      width={1200}
+                      height={1600}
+                      className="h-auto w-full object-contain"
+                      sizes="(max-width: 768px) 100vw, 35vw"
+                    />
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-medium tracking-[-0.03em]">{treatment.title}</h3>
+                    <p className="mt-4 text-sm leading-relaxed text-brand-steel">{treatment.description}</p>
+                    <p className="mt-7 mb-3 text-xs font-medium tracking-[0.18em] text-brand-steel">PROTOCOLO</p>
+                    <ol className="grid gap-3 text-sm leading-relaxed text-brand-navy">
+                      {treatment.protocol.map((step, index) => (
+                        <li key={step}>
+                          {selectedService.title === "Tratamientos faciales" &&
+                          treatment.title === "Limpieza Facial Profunda"
+                            ? `${index + 1}. ${step}`
+                            : step}
+                        </li>
+                      ))}
+                    </ol>
+                    <p className="mt-6 text-sm font-medium text-brand-navy">
+                      Duración del tratamiento: {treatment.duration}
+                    </p>
+                  </div>
+                </div>
+              ))}
+              {selectedService.featuredTreatments && (
+                <p className="mt-8 border-l-2 border-brand-champagne pl-4 text-sm leading-relaxed text-brand-steel">
+                  Nota: Todos los tratamientos están sujetos a una evaluación previa de la piel. El protocolo podrá
+                  ser adaptado según el tipo, condición y necesidades específicas de cada piel, siempre bajo el
+                  criterio profesional del especialista, con el objetivo de garantizar un tratamiento seguro,
+                  personalizado y adecuado para cada cliente.
+                </p>
+              )}
               <div className="mt-8 border-t border-brand-steel/20 pt-6">
                 <p className="mb-4 text-xs font-medium tracking-[0.18em] text-brand-steel">DISPONIBLE EN CONSULTA</p>
                 <ul className="grid gap-x-8 gap-y-3 sm:grid-cols-2">
@@ -729,6 +715,7 @@ export default function Home() {
           </aside>
         </div>
       )}
+      */}
     </div>
   )
 }
