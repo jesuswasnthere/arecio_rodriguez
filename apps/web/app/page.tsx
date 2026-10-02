@@ -9,6 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 type Treatment = {
   id: string
+  order?: number
   name: string
   category: "Facial" | "Corporal"
   description: string
@@ -38,16 +39,16 @@ interface CartItem extends Product {
 */
 
 const treatments: Treatment[] = [
-  { id: "limpieza-regular", name: "Limpieza Facial Regular", category: "Facial", description: "Limpieza esencial para mantener una piel fresca, equilibrada y luminosa.", benefits: ["Retira impurezas", "Equilibra grasa", "Mejora la luminosidad"], protocol: ["Limpieza y exfoliación", "Vapor y extracciones", "Mascarilla, hidratación y protección solar"], duration: "60 minutos", price: "Consultar", needs: ["acne", "poros", "deshidratacion", "opaca"], resultImage: "/media/before_after/limpieza_facial_regular.jpeg" },
-  { id: "limpieza-profunda", name: "Limpieza Facial Profunda", category: "Facial", description: "Protocolo intensivo para descongestionar poros y mejorar textura e hidratación.", benefits: ["Descongestiona poros", "Suaviza textura", "Revitaliza"], protocol: ["Limpieza, exfoliación y vapor", "Peeling enzimático y extracciones", "Alta frecuencia, punta de diamante, LED y mascarilla"], duration: "1 hora 30 minutos", price: "Consultar", needs: ["acne", "poros", "opaca", "cicatrices"], resultImage: "/media/before_after/limpieza_facial_profunda.jpeg" },
-  { id: "dermaplaning", name: "Facial con Dermaplaning", category: "Facial", description: "Renovación superficial para una piel más suave y uniforme.", benefits: ["Suaviza la superficie", "Aporta luminosidad", "Prepara para activos"], protocol: ["Evaluación y limpieza", "Dermaplaning profesional", "Calmante, hidratación y SPF"], duration: "60 minutos", price: "Consultar", needs: ["poros", "opaca", "deshidratacion"] },
-  { id: "carboxiterapia", name: "Facial con Carboxiterapia", category: "Facial", description: "Protocolo que incorpora carboxiterapia según valoración y objetivo estético.", benefits: ["Apoya la circulación", "Mejora apariencia apagada", "Personalizable"], protocol: ["Diagnóstico", "Aplicación de carboxiterapia", "Mascarilla y protección"], duration: "Consultar", price: "Consultar", needs: ["opaca", "flacidez", "arrugas"] },
-  { id: "hidrafacial", name: "Hidrafacial", category: "Facial", description: "Limpieza, extracción e hidratación en un protocolo de renovación confortable.", benefits: ["Limpia y extrae", "Hidrata", "Devuelve luminosidad"], protocol: ["Limpieza y exfoliación", "Extracción e infusión", "Protección solar"], duration: "Consultar", price: "Consultar", needs: ["poros", "deshidratacion", "opaca"] },
+  { id: "limpieza-regular", order: 1, name: "Facial Regular", category: "Facial", description: "Limpieza esencial para mantener una piel fresca, equilibrada y luminosa.", benefits: ["Retira impurezas", "Equilibra grasa", "Mejora la luminosidad"], protocol: ["Limpieza y exfoliación", "Vapor y extracciones", "Mascarilla, hidratación y protección solar"], duration: "60 minutos", price: "Consultar", needs: ["acne", "poros", "deshidratacion", "opaca"], resultImage: "/media/before_after/limpieza_facial_regular.jpeg" },
+  { id: "limpieza-profunda", order: 2, name: "Facial Profundo", category: "Facial", description: "Protocolo intensivo para descongestionar poros y mejorar textura e hidratación.", benefits: ["Descongestiona poros", "Suaviza textura", "Revitaliza"], protocol: ["Limpieza, exfoliación y vapor", "Peeling enzimático y extracciones", "Alta frecuencia, punta de diamante, LED y mascarilla"], duration: "1 hora 30 minutos", price: "Consultar", needs: ["acne", "poros", "opaca", "cicatrices"], resultImage: "/media/before_after/limpieza_facial_profunda.jpeg" },
+  { id: "dermaplaning", order: 3, name: "Facial con Dermaplaning", category: "Facial", description: "Renovación superficial para una piel más suave y uniforme.", benefits: ["Suaviza la superficie", "Aporta luminosidad", "Prepara para activos"], protocol: ["Evaluación y limpieza", "Dermaplaning profesional", "Calmante, hidratación y SPF"], duration: "60 minutos", price: "Consultar", needs: ["poros", "opaca", "deshidratacion"] },
+  { id: "carboxiterapia", order: 4, name: "Facial con Carboxiterapia", category: "Facial", description: "Protocolo que incorpora carboxiterapia según valoración y objetivo estético.", benefits: ["Apoya la circulación", "Mejora apariencia apagada", "Personalizable"], protocol: ["Diagnóstico", "Aplicación de carboxiterapia", "Mascarilla y protección"], duration: "Consultar", price: "Consultar", needs: ["opaca", "flacidez", "arrugas"] },
+  { id: "detox", order: 5, name: "Facial Detox", category: "Facial", description: "Ritual purificante para refrescar y devolver confort a la piel.", benefits: ["Purifica", "Refresca", "Equilibra"], protocol: ["Limpieza y exfoliación", "Mascarilla detox", "Hidratación y SPF"], duration: "Consultar", price: "Consultar", needs: ["acne", "poros", "opaca"] },
+  { id: "hidrafacial", order: 6, name: "Hidrofacial", category: "Facial", description: "Limpieza, extracción e hidratación en un protocolo de renovación confortable.", benefits: ["Limpia y extrae", "Hidrata", "Devuelve luminosidad"], protocol: ["Limpieza y exfoliación", "Extracción e infusión", "Protección solar"], duration: "Consultar", price: "Consultar", needs: ["poros", "deshidratacion", "opaca"] },
   { id: "peeling-enzimatico", name: "Facial con Peeling Enzimático", category: "Facial", description: "Exfoliación enzimática seleccionada para renovar sin agredir la piel.", benefits: ["Renueva", "Unifica visualmente", "Suaviza textura"], protocol: ["Preparación", "Peeling enzimático", "Neutralización, calma y SPF"], duration: "Consultar", price: "Consultar", needs: ["manchas", "poros", "opaca"] },
-  { id: "dermapen", name: "Facial con Dermapen", category: "Facial", description: "Microneedling profesional orientado a textura, marcas y apariencia de cicatrices.", benefits: ["Estimula renovación", "Trabaja textura", "Personaliza activos"], protocol: ["Evaluación y asepsia", "Microneedling controlado", "Calma, hidratación y cuidados posteriores"], duration: "Consultar", price: "Consultar", needs: ["cicatrices", "poros", "arrugas"] },
+  { id: "dermapen", order: 7, name: "Facial con Microneedling / Dermapen", category: "Facial", description: "Microneedling profesional orientado a textura, marcas y apariencia de cicatrices.", benefits: ["Estimula renovación", "Trabaja textura", "Personaliza activos"], protocol: ["Evaluación y asepsia", "Microneedling controlado", "Calma, hidratación y cuidados posteriores"], duration: "Consultar", price: "Consultar", needs: ["cicatrices", "poros", "arrugas"] },
   { id: "prp-facial", name: "Facial con Plasma Rico en Plaquetas", category: "Facial", description: "Protocolo personalizado con PRP, sujeto a valoración y condiciones de cada cliente.", benefits: ["Acompaña la regeneración", "Mejora apariencia de textura", "Plan progresivo"], protocol: ["Valoración", "Preparación y aplicación", "Indicaciones posteriores"], duration: "Consultar", price: "Consultar", needs: ["cicatrices", "arrugas", "flacidez"] },
   { id: "exosomas", name: "Facial con Exosomas", category: "Facial", description: "Tratamiento avanzado con exosomas incorporado únicamente cuando está indicado.", benefits: ["Acompaña la recuperación", "Apoya textura", "Protocolo individual"], protocol: ["Valoración", "Preparación y aplicación", "Seguimiento y cuidados"], duration: "Consultar", price: "Consultar", needs: ["cicatrices", "arrugas", "flacidez"] },
-  { id: "detox", name: "Facial Detox", category: "Facial", description: "Ritual purificante para refrescar y devolver confort a la piel.", benefits: ["Purifica", "Refresca", "Equilibra"], protocol: ["Limpieza y exfoliación", "Mascarilla detox", "Hidratación y SPF"], duration: "Consultar", price: "Consultar", needs: ["acne", "poros", "opaca"] },
   { id: "radiofrecuencia", name: "Radiofrecuencia", category: "Corporal", description: "Tecnología térmica controlada integrada en protocolos corporales de firmeza.", benefits: ["Acompaña firmeza", "Mejora apariencia de piel", "Sesión adaptable"], protocol: ["Evaluación", "Aplicación por zonas", "Cuidados posteriores"], duration: "Consultar", price: "Consultar", needs: ["flacidez"] },
   { id: "prp-corporal", name: "Plasma Rico en Plaquetas Corporal", category: "Corporal", description: "Protocolo corporal personalizado, sujeto a evaluación profesional.", benefits: ["Apoya renovación", "Trabaja textura", "Plan progresivo"], protocol: ["Valoración", "Preparación y aplicación", "Seguimiento"], duration: "Consultar", price: "Consultar", needs: ["cicatrices", "flacidez"] },
   { id: "cicatrices", name: "Tratamiento de Cicatrices", category: "Corporal", description: "Plan personalizado para mejorar progresivamente la apariencia de cicatrices.", benefits: ["Trabaja textura", "Acompaña tono", "Seguimiento profesional"], protocol: ["Diagnóstico", "Técnica según cicatriz", "Cuidados y seguimiento"], duration: "Consultar", price: "Consultar", needs: ["cicatrices", "manchas"] },
@@ -70,16 +71,40 @@ const needs = [
   { id: "cicatrices", label: "Cicatrices y marcas" },
 ]
 
+const facialTreatmentWizardItems: Treatment[] = [
+  { id: "tratamiento-acne", order: 1, name: "Tratamiento para Acné", category: "Facial", description: "Protocolo personalizado para equilibrar la piel, descongestionar poros y acompañar el control de brotes.", benefits: ["Ayuda a descongestionar", "Equilibra el exceso de grasa", "Mejora la apariencia de marcas"], protocol: ["Evaluación de la piel", "Limpieza y preparación", "Activos y técnica según necesidad", "Mascarilla, hidratación y protección"], duration: "Consultar", price: "Consultar", needs: ["acne", "poros"] },
+  { id: "tratamiento-antiedad", order: 2, name: "Tratamiento Antiedad", category: "Facial", description: "Plan orientado a mejorar la apariencia de líneas, textura y luminosidad con activos y tecnología estética.", benefits: ["Suaviza visualmente líneas", "Mejora luminosidad", "Acompaña la firmeza"], protocol: ["Valoración", "Preparación de la piel", "Activos y tecnología seleccionados", "Finalización y cuidados"], duration: "Consultar", price: "Consultar", needs: ["arrugas", "flacidez", "opaca"] },
+  { id: "tratamiento-manchas", order: 3, name: "Tratamiento para Manchas", category: "Facial", description: "Protocolo progresivo para mejorar la apariencia de manchas e hiperpigmentación de forma personalizada.", benefits: ["Ayuda a unificar el tono", "Trabaja luminosidad", "Plan progresivo"], protocol: ["Evaluación del tono y condición", "Preparación", "Peeling o activos indicados", "Protección solar y seguimiento"], duration: "Consultar", price: "Consultar", needs: ["manchas", "opaca"] },
+  { id: "tratamiento-cicatrices", order: 4, name: "Tratamiento para Cicatrices", category: "Facial", description: "Combinación de técnicas orientada a mejorar progresivamente la textura y apariencia de marcas.", benefits: ["Trabaja textura irregular", "Acompaña la renovación", "Seguimiento personalizado"], protocol: ["Valoración", "Preparación y asepsia", "Técnica según la cicatriz", "Calma y cuidados posteriores"], duration: "Consultar", price: "Consultar", needs: ["cicatrices", "poros"] },
+  { id: "radiofrecuencia-multipolar", order: 5, name: "Radiofrecuencia Facial Multipolar", category: "Facial", description: "Tecnología térmica controlada para acompañar protocolos de firmeza y revitalización facial.", benefits: ["Acompaña la firmeza", "Estimula una apariencia más tersa", "Sesión confortable"], protocol: ["Evaluación", "Preparación de la piel", "Aplicación por zonas", "Hidratación y protección"], duration: "Consultar", price: "Consultar", needs: ["flacidez", "arrugas"] },
+  { id: "radiofrecuencia-fraccionada", order: 6, name: "Radiofrecuencia Fraccionada", category: "Facial", description: "Tecnología de precisión que se incorpora únicamente cuando la valoración confirma que es adecuada.", benefits: ["Trabaja textura", "Acompaña la firmeza", "Protocolo por objetivos"], protocol: ["Valoración profesional", "Preparación", "Aplicación controlada", "Cuidados posteriores"], duration: "Consultar", price: "Consultar", needs: ["flacidez", "cicatrices", "arrugas"] },
+  { id: "microneedling-facial", order: 7, name: "Microneedling / Dermapen", category: "Facial", description: "Estimulación controlada orientada a textura, marcas y apariencia de cicatrices.", benefits: ["Estimula renovación", "Trabaja textura", "Personaliza activos"], protocol: ["Evaluación y asepsia", "Microneedling controlado", "Aplicación de activos", "Calma y cuidados posteriores"], duration: "Consultar", price: "Consultar", needs: ["cicatrices", "poros", "arrugas"] },
+  { id: "carbon-laser-peel", order: 8, name: "Carbon Laser Peel", category: "Facial", description: "Protocolo de renovación y luminosidad con carbón y láser, sujeto a valoración.", benefits: ["Renueva visualmente", "Mejora la apariencia de poros", "Aporta luminosidad"], protocol: ["Evaluación", "Preparación y aplicación de carbón", "Láser según indicación", "Calma y protección"], duration: "Consultar", price: "Consultar", needs: ["poros", "opaca"] },
+  { id: "biopen-facial", order: 9, name: "BioPen", category: "Facial", description: "Técnica de estimulación controlada para objetivos de textura, marcas y renovación.", benefits: ["Trabaja textura", "Acompaña la renovación", "Adaptable a cada piel"], protocol: ["Valoración", "Preparación", "Aplicación por zonas", "Cuidados posteriores"], duration: "Consultar", price: "Consultar", needs: ["cicatrices", "poros"] },
+  { id: "peeling-quimico-facial", order: 10, name: "Peeling Químico", category: "Facial", description: "Renovación química seleccionada según la condición de la piel y el objetivo del tratamiento.", benefits: ["Renueva", "Mejora visualmente el tono", "Suaviza textura"], protocol: ["Evaluación", "Preparación", "Aplicación controlada", "Neutralización y cuidados"], duration: "Consultar", price: "Consultar", needs: ["manchas", "poros", "cicatrices"] },
+]
+
 const whatsappNumber = "17866170823"
 const consultationFormUrl = "https://docs.google.com/forms/d/e/1FAIpQLSfe5g5Mb8y4f6dcsQYQPGOseGvbJt2HKMeL8JF7io0pB-62fg/viewform"
 
 export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [facialWizardOpen, setFacialWizardOpen] = useState(false)
+  const [facialWizardStep, setFacialWizardStep] = useState(0)
+  const [treatmentWizardOpen, setTreatmentWizardOpen] = useState(false)
+  const [treatmentWizardStep, setTreatmentWizardStep] = useState(0)
   const [selectedNeed, setSelectedNeed] = useState("acne")
   const [selectedTreatment, setSelectedTreatment] = useState<Treatment | null>(null)
-  const filteredTreatments = treatments.filter((treatment) => treatment.needs.includes(selectedNeed))
+  const orderedTreatments = (items: Treatment[]) =>
+    [...items].sort((a, b) => (a.order ?? 99) - (b.order ?? 99))
+  const filteredTreatments = orderedTreatments(treatments.filter((treatment) => treatment.needs.includes(selectedNeed)))
+  const facialWizardTreatments = orderedTreatments(
+    treatments.filter((treatment) => treatment.category === "Facial" && treatment.order),
+  )
+  const activeFacialTreatment = facialWizardTreatments[facialWizardStep]
+  const activeTreatmentWizardItem = facialTreatmentWizardItems[treatmentWizardStep]
   const nav = [
-    ["Inicio", "#inicio"], ["Sobre mí", "/sobre-mi"], ["Faciales", "#tratamientos-faciales"],
+    ["Inicio", "#inicio"], ["Sobre mí", "/sobre-mi"], ["Faciales", "#tratamientos-faciales"], ["Tratamientos faciales", "#tratamientos-faciales"],
     ["Corporales", "#tratamientos-corporales"], ["Necesidades", "#tratamientos-necesidad"], ["Resultados", "#resultados"], ["Contacto", "#contacto"],
   ]
 
@@ -92,7 +117,11 @@ export default function Home() {
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 lg:px-10" aria-label="Navegación principal">
           <a href="#inicio" className="text-sm font-semibold tracking-[0.18em]">ARECIO RODRÍGUEZ</a>
           <div className="hidden items-center gap-5 text-xs font-medium tracking-[0.08em] text-brand-steel lg:flex">
-            {nav.map(([label, href]) => <a key={href} href={href} className="hover:text-brand-navy">{label}</a>)}
+            {nav.map(([label, href]) => label === "Faciales" ? (
+              <button key={href} type="button" onClick={() => { setFacialWizardStep(0); setFacialWizardOpen(true) }} className="hover:text-brand-navy">{label}</button>
+            ) : label === "Tratamientos faciales" ? (
+              <button key={href} type="button" onClick={() => { setTreatmentWizardStep(0); setTreatmentWizardOpen(true) }} className="hover:text-brand-navy">{label}</button>
+            ) : <a key={href} href={href} className="hover:text-brand-navy">{label}</a>)}
           </div>
           <div className="flex items-center gap-3">
             <Button className="hidden rounded-none bg-brand-navy text-brand-white hover:bg-brand-navy/90 sm:inline-flex" onClick={() => { window.location.hash = "reservar" }}>Reservar cita</Button>
@@ -103,10 +132,54 @@ export default function Home() {
         {mobileMenuOpen && <div className="fixed inset-0 z-50 bg-brand-navy/30 lg:hidden" role="dialog" aria-modal="true">
           <div className="absolute right-0 top-0 h-full w-[min(22rem,90vw)] bg-brand-white p-6 shadow-xl">
             <div className="flex justify-between border-b border-brand-steel/20 pb-5"><span className="text-xs tracking-[0.16em]">NAVEGACIÓN</span><button type="button" aria-label="Cerrar menú" onClick={() => setMobileMenuOpen(false)}><X size={22} /></button></div>
-            <div className="flex flex-col gap-6 pt-8">{nav.map(([label, href]) => <a key={href} href={href} onClick={() => setMobileMenuOpen(false)} className="text-xl">{label}</a>)}<Button className="mt-3 rounded-none bg-brand-navy text-brand-white" onClick={() => { window.location.hash = "reservar"; setMobileMenuOpen(false) }}>Reservar cita</Button></div>
+            <div className="flex flex-col gap-6 pt-8">{nav.map(([label, href]) => label === "Faciales" ? (
+              <button key={href} type="button" onClick={() => { setFacialWizardStep(0); setFacialWizardOpen(true); setMobileMenuOpen(false) }} className="text-left text-xl">{label}</button>
+            ) : label === "Tratamientos faciales" ? (
+              <button key={href} type="button" onClick={() => { setTreatmentWizardStep(0); setTreatmentWizardOpen(true); setMobileMenuOpen(false) }} className="text-left text-xl">{label}</button>
+            ) : <a key={href} href={href} onClick={() => setMobileMenuOpen(false)} className="text-xl">{label}</a>)}<Button className="mt-3 rounded-none bg-brand-navy text-brand-white" onClick={() => { window.location.hash = "reservar"; setMobileMenuOpen(false) }}>Reservar cita</Button></div>
           </div>
         </div>}
       </header>
+
+      {treatmentWizardOpen && activeTreatmentWizardItem && <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 sm:p-6" role="dialog" aria-modal="true" aria-labelledby="treatment-wizard-title">
+        <button type="button" className="absolute inset-0 bg-brand-navy/70 backdrop-blur-sm" aria-label="Cerrar guía de tratamientos faciales" onClick={() => setTreatmentWizardOpen(false)} />
+        <article className="relative max-h-[92vh] w-full max-w-4xl overflow-y-auto bg-brand-white shadow-2xl">
+          <div className="border-b border-brand-steel/20 px-6 py-5 sm:px-10">
+            <div className="flex items-start justify-between gap-5"><div><p className="text-[10px] font-medium tracking-[0.22em] text-brand-steel">TRATAMIENTOS FACIALES</p><h2 id="treatment-wizard-title" className="mt-2 text-3xl font-medium tracking-[-.04em] sm:text-4xl">Elige el tratamiento que necesitas.</h2></div><button type="button" onClick={() => setTreatmentWizardOpen(false)} aria-label="Cerrar guía de tratamientos faciales"><X size={22} /></button></div>
+            <div className="mt-7 flex items-center gap-2" aria-label={`Paso ${treatmentWizardStep + 1} de ${facialTreatmentWizardItems.length}`}>{facialTreatmentWizardItems.map((item, index) => <button key={item.id} type="button" onClick={() => setTreatmentWizardStep(index)} aria-label={`Ir a ${item.name}`} className={`h-1.5 flex-1 transition-colors ${index <= treatmentWizardStep ? "bg-brand-navy" : "bg-brand-steel/20"}`} />)}</div>
+            <p className="mt-3 text-xs tracking-[0.14em] text-brand-steel">PASO {treatmentWizardStep + 1} DE {facialTreatmentWizardItems.length}</p>
+          </div>
+          <div className="grid gap-8 px-6 py-7 sm:px-10 sm:py-9 lg:grid-cols-[.8fr_1.2fr]">
+            <div className="flex flex-col justify-between"><div><p className="text-xs tracking-[0.18em] text-brand-steel">TRATAMIENTO {String(treatmentWizardStep + 1).padStart(2, "0")}</p><h3 className="mt-3 text-3xl font-medium tracking-[-.04em]">{activeTreatmentWizardItem.name}</h3><p className="mt-5 text-sm leading-relaxed text-brand-steel">{activeTreatmentWizardItem.description}</p></div><div className="mt-8 grid grid-cols-2 gap-3 text-sm"><div className="border border-brand-steel/20 p-4"><span className="block text-[10px] tracking-[0.14em] text-brand-steel">DURACIÓN</span><strong className="mt-2 block font-medium">{activeTreatmentWizardItem.duration}</strong></div><div className="border border-brand-steel/20 p-4"><span className="block text-[10px] tracking-[0.14em] text-brand-steel">PRECIO</span><strong className="mt-2 block font-medium">{activeTreatmentWizardItem.price}</strong></div></div></div>
+            <div className="border-l border-brand-steel/20 pl-0 lg:pl-8"><p className="text-xs font-medium tracking-[0.18em] text-brand-steel">BENEFICIOS</p><ul className="mt-4 grid gap-3 text-sm">{activeTreatmentWizardItem.benefits.map((benefit) => <li key={benefit} className="flex gap-3"><span className="text-brand-champagne">✦</span>{benefit}</li>)}</ul><p className="mt-8 text-xs font-medium tracking-[0.18em] text-brand-steel">PROTOCOLO</p><ol className="mt-4 grid gap-3 text-sm leading-relaxed">{activeTreatmentWizardItem.protocol.map((step, index) => <li key={step} className="flex gap-3"><span className="min-w-5 text-brand-steel">{index + 1}.</span>{step}</li>)}</ol><p className="mt-7 border-l-2 border-brand-champagne pl-4 text-sm leading-relaxed text-brand-steel">{professionalNote}</p></div>
+          </div>
+          <div className="flex flex-col-reverse gap-3 border-t border-brand-steel/20 px-6 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-10"><Button variant="outline" disabled={treatmentWizardStep === 0} onClick={() => setTreatmentWizardStep((step) => step - 1)} className="rounded-none border-brand-navy">Anterior</Button><div className="flex flex-col gap-3 sm:flex-row"><Button variant="outline" onClick={() => { setTreatmentWizardOpen(false); setSelectedTreatment(activeTreatmentWizardItem) }} className="rounded-none border-brand-navy">Ver ficha completa</Button>{treatmentWizardStep < facialTreatmentWizardItems.length - 1 ? <Button onClick={() => setTreatmentWizardStep((step) => step + 1)} className="rounded-none bg-brand-navy text-brand-white hover:bg-brand-navy/90">Siguiente <ArrowUpRight size={16} /></Button> : <Button onClick={() => { setTreatmentWizardOpen(false); window.location.hash = "reservar" }} className="rounded-none bg-brand-champagne text-brand-navy hover:bg-brand-champagne/90">Reservar cita <ArrowUpRight size={16} /></Button>}</div></div>
+        </article>
+      </div>}
+
+      {facialWizardOpen && activeFacialTreatment && <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 sm:p-6" role="dialog" aria-modal="true" aria-labelledby="facial-wizard-title">
+        <button type="button" className="absolute inset-0 bg-brand-navy/70 backdrop-blur-sm" aria-label="Cerrar guía de faciales" onClick={() => setFacialWizardOpen(false)} />
+        <article className="relative max-h-[92vh] w-full max-w-4xl overflow-y-auto bg-brand-white shadow-2xl">
+          <div className="border-b border-brand-steel/20 px-6 py-5 sm:px-10">
+            <div className="flex items-start justify-between gap-5">
+              <div><p className="text-[10px] font-medium tracking-[0.22em] text-brand-steel">GUÍA DE FACIALES</p><h2 id="facial-wizard-title" className="mt-2 text-3xl font-medium tracking-[-.04em] sm:text-4xl">Encuentra tu protocolo ideal.</h2></div>
+              <button type="button" onClick={() => setFacialWizardOpen(false)} aria-label="Cerrar guía de faciales" className="shrink-0"><X size={22} /></button>
+            </div>
+            <div className="mt-7 flex items-center gap-2" aria-label={`Paso ${facialWizardStep + 1} de ${facialWizardTreatments.length}`}>
+              {facialWizardTreatments.map((treatment, index) => <button key={treatment.id} type="button" onClick={() => setFacialWizardStep(index)} aria-label={`Ir a ${treatment.name}`} className={`h-1.5 flex-1 transition-colors ${index <= facialWizardStep ? "bg-brand-navy" : "bg-brand-steel/20"}`} />)}
+            </div>
+            <p className="mt-3 text-xs tracking-[0.14em] text-brand-steel">PASO {facialWizardStep + 1} DE {facialWizardTreatments.length}</p>
+          </div>
+          <div className="grid gap-8 px-6 py-7 sm:px-10 sm:py-9 lg:grid-cols-[.8fr_1.2fr]">
+            <div className="flex flex-col justify-between">
+              <div><p className="text-xs tracking-[0.18em] text-brand-steel">FACIAL {String(facialWizardStep + 1).padStart(2, "0")}</p><h3 className="mt-3 text-3xl font-medium tracking-[-.04em]">{activeFacialTreatment.name}</h3><p className="mt-5 text-sm leading-relaxed text-brand-steel">{activeFacialTreatment.description}</p></div>
+              <div className="mt-8 grid grid-cols-2 gap-3 text-sm"><div className="border border-brand-steel/20 p-4"><span className="block text-[10px] tracking-[0.14em] text-brand-steel">DURACIÓN</span><strong className="mt-2 block font-medium">{activeFacialTreatment.duration}</strong></div><div className="border border-brand-steel/20 p-4"><span className="block text-[10px] tracking-[0.14em] text-brand-steel">PRECIO</span><strong className="mt-2 block font-medium">{activeFacialTreatment.price}</strong></div></div>
+            </div>
+            <div className="border-l border-brand-steel/20 pl-0 lg:pl-8"><p className="text-xs font-medium tracking-[0.18em] text-brand-steel">¿QUÉ INCLUYE?</p><ul className="mt-4 grid gap-3 text-sm">{activeFacialTreatment.benefits.map((benefit) => <li key={benefit} className="flex gap-3"><span className="text-brand-champagne">✦</span>{benefit}</li>)}</ul><p className="mt-8 text-xs font-medium tracking-[0.18em] text-brand-steel">PROTOCOLO</p><ol className="mt-4 grid gap-3 text-sm leading-relaxed">{activeFacialTreatment.protocol.map((step, index) => <li key={step} className="flex gap-3"><span className="min-w-5 text-brand-steel">{index + 1}.</span>{step}</li>)}</ol><p className="mt-7 border-l-2 border-brand-champagne pl-4 text-sm leading-relaxed text-brand-steel">{professionalNote}</p></div>
+          </div>
+          <div className="flex flex-col-reverse gap-3 border-t border-brand-steel/20 px-6 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-10"><Button variant="outline" disabled={facialWizardStep === 0} onClick={() => setFacialWizardStep((step) => step - 1)} className="rounded-none border-brand-navy">Anterior</Button><div className="flex flex-col gap-3 sm:flex-row"><Button variant="outline" onClick={() => { setFacialWizardOpen(false); setSelectedTreatment(activeFacialTreatment) }} className="rounded-none border-brand-navy">Ver ficha completa</Button>{facialWizardStep < facialWizardTreatments.length - 1 ? <Button onClick={() => setFacialWizardStep((step) => step + 1)} className="rounded-none bg-brand-navy text-brand-white hover:bg-brand-navy/90">Siguiente <ArrowUpRight size={16} /></Button> : <Button onClick={() => { setFacialWizardOpen(false); window.location.hash = "reservar" }} className="rounded-none bg-brand-champagne text-brand-navy hover:bg-brand-champagne/90">Reservar cita <ArrowUpRight size={16} /></Button>}</div></div>
+        </article>
+      </div>}
 
       <main>
         <section id="inicio" className="mx-auto max-w-7xl px-5 py-14 sm:py-20 lg:px-10 lg:py-28">
@@ -117,7 +190,7 @@ export default function Home() {
               <p className="mt-7 max-w-lg text-lg leading-relaxed text-brand-steel">Tratamientos faciales y corporales personalizados para una piel saludable, fuerte y verdaderamente tuya.</p>
               <Button size="lg" className="mt-9 h-14 rounded-none bg-brand-champagne px-8 text-base text-brand-navy hover:bg-brand-champagne/90" onClick={() => { window.location.hash = "reservar" }}>Reservar cita <ArrowUpRight size={18} /></Button>
             </div>
-            <div className="relative aspect-[4/3] overflow-hidden bg-brand-navy"><Image src="/media/portadas_selfies_perfiles/portada_home.jpeg" alt="Arecio Rodríguez trabajando en estética" fill priority className="object-cover" sizes="(max-width: 1024px) 100vw, 45vw" /></div>
+            <div className="relative aspect-[4/3] overflow-hidden bg-brand-white"><Image src="/media/acercademi.jpeg" alt="Arecio Rodríguez, especialista en estética facial y corporal" fill priority className="object-contain" sizes="(max-width: 1024px) 100vw, 45vw" /></div>
           </div>
         </section>
 
@@ -125,7 +198,7 @@ export default function Home() {
 
         {(["Facial", "Corporal"] as const).map((category) => <section key={category} id={category === "Facial" ? "tratamientos-faciales" : "tratamientos-corporales"} className="mx-auto max-w-7xl px-5 py-16 sm:py-20 lg:px-10">
           <div className="mb-10 flex flex-col justify-between gap-4 sm:flex-row sm:items-end"><div><p className="text-xs tracking-[.24em] text-brand-steel">TRATAMIENTOS {category.toUpperCase()}ES</p><h2 className="mt-3 text-4xl font-medium tracking-[-.04em]">{category === "Facial" ? "Protocolos para el rostro." : "Cuidado corporal con propósito."}</h2></div><p className="max-w-sm text-sm leading-relaxed text-brand-steel">Valoración previa, protocolo claro y acompañamiento profesional.</p></div>
-          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">{treatments.filter((treatment) => treatment.category === category).map((treatment) => <TreatmentCard key={treatment.id} treatment={treatment} onSelect={setSelectedTreatment} />)}</div>
+          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">{orderedTreatments(treatments.filter((treatment) => treatment.category === category)).map((treatment) => <TreatmentCard key={treatment.id} treatment={treatment} onSelect={setSelectedTreatment} />)}</div>
         </section>)}
 
         <section id="tratamientos-necesidad" className="bg-brand-navy text-brand-white"><div className="mx-auto max-w-7xl px-5 py-16 sm:py-20 lg:px-10"><p className="text-xs tracking-[.24em] text-brand-champagne">TRATAMIENTOS POR NECESIDAD</p><h2 className="mt-3 max-w-2xl text-4xl font-medium tracking-[-.04em] sm:text-5xl">Elige lo que quieres trabajar.</h2><div className="mt-9 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">{needs.map((need) => <button type="button" key={need.id} onClick={() => setSelectedNeed(need.id)} aria-pressed={selectedNeed === need.id} className={`border px-4 py-4 text-left text-sm transition ${selectedNeed === need.id ? "border-brand-champagne bg-brand-champagne text-brand-navy" : "border-brand-steel/50 hover:border-brand-champagne"}`}>{need.label}</button>)}</div><div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">{filteredTreatments.map((treatment) => <TreatmentCard key={treatment.id} treatment={treatment} onSelect={setSelectedTreatment} dark />)}</div></div></section>
