@@ -86,6 +86,9 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-brand-white text-brand-navy">
       <header className="sticky top-0 z-40 border-b border-brand-steel/20 bg-brand-white/95 backdrop-blur">
+        <div className="bg-brand-navy px-4 py-2.5 text-center text-[10px] font-medium uppercase tracking-[0.12em] leading-relaxed text-brand-white sm:text-xs sm:tracking-[0.16em]">
+          Especialista en estética facial <span className="mx-1 text-brand-champagne">·</span> Dermapen <span className="mx-1 text-brand-champagne">·</span> Tratamientos antiedad <span className="mx-1 text-brand-champagne">·</span> Acné <span className="mx-1 text-brand-champagne">·</span> Hiperpigmentación <span className="mx-1 text-brand-champagne">·</span> Tratamientos corporales
+        </div>
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 lg:px-10" aria-label="Navegación principal">
           <a href="#inicio" className="text-sm font-semibold tracking-[0.18em]">ARECIO RODRÍGUEZ</a>
           <div className="hidden items-center gap-5 text-xs font-medium tracking-[0.08em] text-brand-steel lg:flex">
