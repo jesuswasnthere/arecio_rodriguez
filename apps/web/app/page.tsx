@@ -2,35 +2,28 @@
 
 import Image from "next/image"
 import { useState } from "react"
-import {
-  ArrowUpRight,
-  Check,
-  Mail,
-  MapPin,
-  Menu,
-  Phone,
-  X,
-} from "lucide-react"
+import { ArrowUpRight, Mail, MapPin, Menu, Phone, X } from "lucide-react"
 
+import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
-interface ServiceGroup {
+type Treatment = {
   id: string
-  title: string
-  intro: string
-  services: string[]
-  featuredTreatments?: TreatmentDetail[]
-}
-
-interface TreatmentDetail {
-  title: string
+  name: string
+  category: "Facial" | "Corporal"
   description: string
+  benefits: string[]
   protocol: string[]
   duration: string
-  beforeAfterImage: string
+  price: string
+  needs: string[]
+  resultImage?: string
 }
 
-/* Productos y carrito: conservar para activar cuando se habilite el catálogo.
+const professionalNote =
+  "Todo protocolo comienza con una evaluación previa. El tratamiento se adapta al tipo, condición y necesidades de cada piel bajo criterio profesional."
+
+/* Productos y carrito: lógica conservada para activar cuando se habilite la tienda.
 interface Product {
   id: string
   name: string
@@ -38,686 +31,119 @@ interface Product {
   description: string
   image: string
 }
-
 interface CartItem extends Product {
   quantity: number
 }
+// Al activar el catálogo: añadir al carrito, actualizar cantidades y enviar el pedido por WhatsApp.
 */
 
-const serviceGroups: ServiceGroup[] = [
-  {
-    id: "tratamientos-faciales",
-    title: "Tratamientos faciales",
-    intro: "Protocolos personalizados para transformar la salud y apariencia de la piel del rostro.",
-    services: [
-      "Limpieza Facial Regular",
-      "Facial profundo",
-      "Facial con Dermaplaning",
-      "Facial con Carboxiterapia",
-      "Hidrafacial",
-      "Facial con peeling enzimático",
-      "Facial con Dermapen",
-      "Facial con plasma rico en plaquetas",
-      "Facial con Exoxomas",
-      "Facial Detox",
-    ],
-    featuredTreatments: [
-      {
-        title: "Limpieza Facial Regular",
-        description:
-          "Tratamiento esencial para mantener una piel limpia, fresca y equilibrada, ayudando a eliminar impurezas, células muertas y exceso de grasa para mejorar su apariencia y textura.",
-        protocol: [
-          "Limpieza — Preparación y limpieza de la piel.",
-          "Exfoliación — Eliminación de células muertas y renovación superficial.",
-          "Vapor — Preparación de la piel para facilitar las extracciones.",
-          "Extracciones — Remoción cuidadosa de comedones e impurezas.",
-          "Hidratación y nutrición — Aplicación de vitaminas y antioxidantes para hidratar, nutrir y revitalizar la piel.",
-          "Mascarilla — Seleccionada según las necesidades y características de cada tipo de piel.",
-          "Tonificación — Ayuda a equilibrar, refrescar y preparar la piel para finalizar el tratamiento.",
-          "Protección solar — Aplicación final para proteger la piel frente a la exposición solar.",
-        ],
-        duration: "60 minutos",
-        beforeAfterImage: "/media/before_after/limpieza_facial_regular.jpeg",
-      },
-      {
-        title: "Limpieza Facial Profunda",
-        description:
-          "Tratamiento profesional diseñado para realizar una limpieza intensiva de la piel, eliminar impurezas y células muertas, descongestionar los poros y mejorar la textura, hidratación y luminosidad del rostro.",
-        protocol: [
-          "Limpieza de la piel",
-          "Exfoliación",
-          "Vapor",
-          "Peeling enzimático",
-          "Extracciones",
-          "Alta frecuencia",
-          "Microdermoabrasión con punta de diamante",
-          "Fototerapia LED",
-          "Hidratación y nutrición de la piel",
-          "Mascarilla facial",
-          "Tonificación",
-          "Protección solar",
-        ],
-        duration: "1 hora y 30 minutos",
-        beforeAfterImage: "/media/before_after/limpieza_facial_profunda.jpeg",
-      },
-    ],
-  },
-  {
-    id: "tratamientos-corporales",
-    title: "Tratamientos corporales",
-    intro: "Técnicas y tecnología estética para cuidar, renovar y mejorar la apariencia de la piel corporal.",
-    services: [
-      "Radiofrecuencia",
-      "Plasma rico en plaquetas",
-      "Tratamiento de cicatrices",
-      "Peeling químico",
-      "Microneedling o Dermapen",
-      "Eliminación de verrugas y lunares",
-      "Exoxomas",
-      "Láser Picosecond",
-      "Carbón láser",
-      "Biopen",
-    ],
-  },
+const treatments: Treatment[] = [
+  { id: "limpieza-regular", name: "Limpieza Facial Regular", category: "Facial", description: "Limpieza esencial para mantener una piel fresca, equilibrada y luminosa.", benefits: ["Retira impurezas", "Equilibra grasa", "Mejora la luminosidad"], protocol: ["Limpieza y exfoliación", "Vapor y extracciones", "Mascarilla, hidratación y protección solar"], duration: "60 minutos", price: "Consultar", needs: ["acne", "poros", "deshidratacion", "opaca"], resultImage: "/media/before_after/limpieza_facial_regular.jpeg" },
+  { id: "limpieza-profunda", name: "Limpieza Facial Profunda", category: "Facial", description: "Protocolo intensivo para descongestionar poros y mejorar textura e hidratación.", benefits: ["Descongestiona poros", "Suaviza textura", "Revitaliza"], protocol: ["Limpieza, exfoliación y vapor", "Peeling enzimático y extracciones", "Alta frecuencia, punta de diamante, LED y mascarilla"], duration: "1 hora 30 minutos", price: "Consultar", needs: ["acne", "poros", "opaca", "cicatrices"], resultImage: "/media/before_after/limpieza_facial_profunda.jpeg" },
+  { id: "dermaplaning", name: "Facial con Dermaplaning", category: "Facial", description: "Renovación superficial para una piel más suave y uniforme.", benefits: ["Suaviza la superficie", "Aporta luminosidad", "Prepara para activos"], protocol: ["Evaluación y limpieza", "Dermaplaning profesional", "Calmante, hidratación y SPF"], duration: "60 minutos", price: "Consultar", needs: ["poros", "opaca", "deshidratacion"] },
+  { id: "carboxiterapia", name: "Facial con Carboxiterapia", category: "Facial", description: "Protocolo que incorpora carboxiterapia según valoración y objetivo estético.", benefits: ["Apoya la circulación", "Mejora apariencia apagada", "Personalizable"], protocol: ["Diagnóstico", "Aplicación de carboxiterapia", "Mascarilla y protección"], duration: "Consultar", price: "Consultar", needs: ["opaca", "flacidez", "arrugas"] },
+  { id: "hidrafacial", name: "Hidrafacial", category: "Facial", description: "Limpieza, extracción e hidratación en un protocolo de renovación confortable.", benefits: ["Limpia y extrae", "Hidrata", "Devuelve luminosidad"], protocol: ["Limpieza y exfoliación", "Extracción e infusión", "Protección solar"], duration: "Consultar", price: "Consultar", needs: ["poros", "deshidratacion", "opaca"] },
+  { id: "peeling-enzimatico", name: "Facial con Peeling Enzimático", category: "Facial", description: "Exfoliación enzimática seleccionada para renovar sin agredir la piel.", benefits: ["Renueva", "Unifica visualmente", "Suaviza textura"], protocol: ["Preparación", "Peeling enzimático", "Neutralización, calma y SPF"], duration: "Consultar", price: "Consultar", needs: ["manchas", "poros", "opaca"] },
+  { id: "dermapen", name: "Facial con Dermapen", category: "Facial", description: "Microneedling profesional orientado a textura, marcas y apariencia de cicatrices.", benefits: ["Estimula renovación", "Trabaja textura", "Personaliza activos"], protocol: ["Evaluación y asepsia", "Microneedling controlado", "Calma, hidratación y cuidados posteriores"], duration: "Consultar", price: "Consultar", needs: ["cicatrices", "poros", "arrugas"] },
+  { id: "prp-facial", name: "Facial con Plasma Rico en Plaquetas", category: "Facial", description: "Protocolo personalizado con PRP, sujeto a valoración y condiciones de cada cliente.", benefits: ["Acompaña la regeneración", "Mejora apariencia de textura", "Plan progresivo"], protocol: ["Valoración", "Preparación y aplicación", "Indicaciones posteriores"], duration: "Consultar", price: "Consultar", needs: ["cicatrices", "arrugas", "flacidez"] },
+  { id: "exosomas", name: "Facial con Exosomas", category: "Facial", description: "Tratamiento avanzado con exosomas incorporado únicamente cuando está indicado.", benefits: ["Acompaña la recuperación", "Apoya textura", "Protocolo individual"], protocol: ["Valoración", "Preparación y aplicación", "Seguimiento y cuidados"], duration: "Consultar", price: "Consultar", needs: ["cicatrices", "arrugas", "flacidez"] },
+  { id: "detox", name: "Facial Detox", category: "Facial", description: "Ritual purificante para refrescar y devolver confort a la piel.", benefits: ["Purifica", "Refresca", "Equilibra"], protocol: ["Limpieza y exfoliación", "Mascarilla detox", "Hidratación y SPF"], duration: "Consultar", price: "Consultar", needs: ["acne", "poros", "opaca"] },
+  { id: "radiofrecuencia", name: "Radiofrecuencia", category: "Corporal", description: "Tecnología térmica controlada integrada en protocolos corporales de firmeza.", benefits: ["Acompaña firmeza", "Mejora apariencia de piel", "Sesión adaptable"], protocol: ["Evaluación", "Aplicación por zonas", "Cuidados posteriores"], duration: "Consultar", price: "Consultar", needs: ["flacidez"] },
+  { id: "prp-corporal", name: "Plasma Rico en Plaquetas Corporal", category: "Corporal", description: "Protocolo corporal personalizado, sujeto a evaluación profesional.", benefits: ["Apoya renovación", "Trabaja textura", "Plan progresivo"], protocol: ["Valoración", "Preparación y aplicación", "Seguimiento"], duration: "Consultar", price: "Consultar", needs: ["cicatrices", "flacidez"] },
+  { id: "cicatrices", name: "Tratamiento de Cicatrices", category: "Corporal", description: "Plan personalizado para mejorar progresivamente la apariencia de cicatrices.", benefits: ["Trabaja textura", "Acompaña tono", "Seguimiento profesional"], protocol: ["Diagnóstico", "Técnica según cicatriz", "Cuidados y seguimiento"], duration: "Consultar", price: "Consultar", needs: ["cicatrices", "manchas"] },
+  { id: "peeling-quimico", name: "Peeling Químico", category: "Corporal", description: "Renovación química seleccionada según zona, piel y objetivo.", benefits: ["Renueva", "Mejora apariencia de tono", "Suaviza textura"], protocol: ["Evaluación", "Aplicación controlada", "Neutralización y cuidados"], duration: "Consultar", price: "Consultar", needs: ["manchas", "poros", "cicatrices"] },
+  { id: "microneedling-corporal", name: "Microneedling o Dermapen", category: "Corporal", description: "Estimulación controlada para textura y marcas corporales.", benefits: ["Trabaja marcas", "Estimula renovación", "Protocolo por zona"], protocol: ["Preparación", "Microneedling", "Calma y cuidados posteriores"], duration: "Consultar", price: "Consultar", needs: ["cicatrices", "flacidez"] },
+  { id: "verrugas-lunares", name: "Eliminación de verrugas y lunares", category: "Corporal", description: "Consulta de valoración para determinar si el procedimiento es adecuado y seguro.", benefits: ["Evaluación individual", "Orientación profesional", "Plan seguro"], protocol: ["Valoración previa", "Derivación si corresponde", "Indicaciones posteriores"], duration: "Consultar", price: "Consultar", needs: ["cicatrices"] },
+  { id: "laser-picosecond", name: "Láser Picosecond", category: "Corporal", description: "Tecnología de precisión que se incorpora solo después de una valoración.", benefits: ["Plan personalizado", "Trabaja objetivos específicos", "Seguimiento"], protocol: ["Evaluación", "Sesión según indicación", "Protección y cuidados"], duration: "Consultar", price: "Consultar", needs: ["manchas", "cicatrices"] },
+  { id: "carbon-laser", name: "Carbón láser", category: "Corporal", description: "Protocolo de renovación y luminosidad con láser y carbón, sujeto a indicación.", benefits: ["Renueva", "Mejora apariencia de poros", "Aporta luminosidad"], protocol: ["Preparación", "Aplicación de carbón y láser", "Calma y protección"], duration: "Consultar", price: "Consultar", needs: ["poros", "opaca"] },
+  { id: "biopen", name: "Biopen", category: "Corporal", description: "Técnica de estimulación controlada para objetivos de textura y marcas.", benefits: ["Trabaja textura", "Estimula renovación", "Adaptable"], protocol: ["Valoración", "Aplicación por zona", "Cuidados posteriores"], duration: "Consultar", price: "Consultar", needs: ["cicatrices", "flacidez"] },
 ]
 
-/* Catálogo futuro.
-const products: Product[] = [
-  {
-    id: "facial-kit",
-    name: "Ritual Facial Esencial",
-    category: "RUTINA EN CASA",
-    description: "Una selección de cuidado diario para limpiar, hidratar y proteger tu piel.",
-    image: "/media/skin-specialist.jpg",
-  },
-  {
-    id: "renewal-serum",
-    name: "Serum Renovación",
-    category: "TRATAMIENTO",
-    description: "Concentrado para acompañar la renovación y mejorar visiblemente la textura.",
-    image: "/media/portrait-blue-2.jpg",
-  },
-  {
-    id: "mineral-defense",
-    name: "Mineral Defense SPF 50",
-    category: "PROTECCIÓN",
-    description: "Protección mineral de amplio espectro para conservar los resultados de tu tratamiento.",
-    image: "/media/portrait-blue-3.jpg",
-  },
-]
-*/
-
-const navItems = [
-  { label: "Faciales", href: "#tratamientos-faciales" },
-  { label: "Corporales", href: "#tratamientos-corporales" },
-  { label: "Sobre mí", href: "/sobre-mi" },
-  // { label: "Productos", href: "#productos" }, // Próximamente
+const needs = [
+  { id: "acne", label: "Acné y congestión" },
+  { id: "manchas", label: "Manchas e hiperpigmentación" },
+  { id: "arrugas", label: "Líneas y arrugas" },
+  { id: "flacidez", label: "Flacidez" },
+  { id: "poros", label: "Poros y textura" },
+  { id: "deshidratacion", label: "Deshidratación" },
+  { id: "opaca", label: "Piel opaca" },
+  { id: "cicatrices", label: "Cicatrices y marcas" },
 ]
 
 const whatsappNumber = "17866170823"
-const consultationFormUrl =
-  "https://docs.google.com/forms/d/e/1FAIpQLSfe5g5Mb8y4f6dcsQYQPGOseGvbJt2HKMeL8JF7io0pB-62fg/viewform"
+const consultationFormUrl = "https://docs.google.com/forms/d/e/1FAIpQLSfe5g5Mb8y4f6dcsQYQPGOseGvbJt2HKMeL8JF7io0pB-62fg/viewform"
 
 export default function Home() {
-  const [selectedService, setSelectedService] = useState<ServiceGroup | null>(null)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-
-  /* Lógica de carrito reservada para la futura sección Productos.
-  function addToCart(product: Product) {
-    setCart((current) => {
-      const existing = current.find((item) => item.id === product.id)
-      if (existing) {
-        return current.map((item) =>
-          item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item,
-        )
-      }
-      return [...current, { ...product, quantity: 1 }]
-    })
-    setSelectedProduct(null)
-    setAddedProduct(product)
-    window.setTimeout(() => setAddedProduct(null), 4500)
-  }
-
-  function updateQuantity(productId: string, change: number) {
-    setCart((current) =>
-      current
-        .map((item) =>
-          item.id === productId ? { ...item, quantity: item.quantity + change } : item,
-        )
-        .filter((item) => item.quantity > 0),
-    )
-  }
-
-  function sendOrderToWhatsApp() {
-    const order = cart
-      .map((item) => `• ${item.name} x${item.quantity}`)
-      .join("\n")
-    const message = `Hola Arecio, quiero consultar por estos servicios:\n\n${order}`
-    window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, "_blank")
-  }
-  */
+  const [selectedNeed, setSelectedNeed] = useState("acne")
+  const [selectedTreatment, setSelectedTreatment] = useState<Treatment | null>(null)
+  const filteredTreatments = treatments.filter((treatment) => treatment.needs.includes(selectedNeed))
+  const nav = [
+    ["Inicio", "#inicio"], ["Sobre mí", "/sobre-mi"], ["Faciales", "#tratamientos-faciales"],
+    ["Corporales", "#tratamientos-corporales"], ["Necesidades", "#tratamientos-necesidad"], ["Resultados", "#resultados"], ["Contacto", "#contacto"],
+  ]
 
   return (
     <div className="min-h-screen bg-brand-white text-brand-navy">
       <header className="sticky top-0 z-40 border-b border-brand-steel/20 bg-brand-white/95 backdrop-blur">
-        <nav
-          className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 lg:px-10"
-          aria-label="Navegación principal"
-        >
-          <a href="#" className="text-sm font-semibold tracking-[0.22em]">
-            ARECIO RODRÍGUEZ
-          </a>
-          <div className="hidden items-center gap-8 text-xs font-medium tracking-[0.14em] text-brand-steel sm:flex">
-            {navItems.map((item) => (
-              <a key={item.href} href={item.href} className="transition-colors hover:text-brand-navy">
-                {item.label}
-              </a>
-            ))}
+        <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 lg:px-10" aria-label="Navegación principal">
+          <a href="#inicio" className="text-sm font-semibold tracking-[0.18em]">ARECIO RODRÍGUEZ</a>
+          <div className="hidden items-center gap-5 text-xs font-medium tracking-[0.08em] text-brand-steel lg:flex">
+            {nav.map(([label, href]) => <a key={href} href={href} className="hover:text-brand-navy">{label}</a>)}
           </div>
-          <div className="flex items-center gap-5">
-            <button
-              type="button"
-              onClick={() => setMobileMenuOpen(true)}
-              className="sm:hidden"
-              aria-label="Abrir menú de navegación"
-              aria-expanded={mobileMenuOpen}
-            >
-              <Menu size={21} strokeWidth={1.5} />
-            </button>
+          <div className="flex items-center gap-3">
+            <Button className="hidden rounded-none bg-brand-navy text-brand-white hover:bg-brand-navy/90 sm:inline-flex" onClick={() => { window.location.hash = "reservar" }}>Reservar cita</Button>
+            <Button size="sm" className="rounded-none bg-brand-navy text-brand-white hover:bg-brand-navy/90 sm:hidden" onClick={() => { window.location.hash = "reservar" }}>Reservar</Button>
+            <button type="button" className="lg:hidden" aria-label="Abrir menú" onClick={() => setMobileMenuOpen(true)}><Menu size={22} /></button>
           </div>
         </nav>
-        {mobileMenuOpen && (
-          <div className="fixed inset-0 z-50 sm:hidden" role="dialog" aria-modal="true" aria-label="Menú de navegación">
-            <button
-              type="button"
-              className="absolute inset-0 bg-brand-navy/25"
-              aria-label="Cerrar menú"
-              onClick={() => setMobileMenuOpen(false)}
-            />
-            <div className="absolute top-0 right-0 h-full w-[min(21rem,88vw)] bg-brand-white px-7 py-6 shadow-2xl">
-              <div className="flex items-center justify-between border-b border-brand-steel/20 pb-6">
-                <span className="text-xs font-medium tracking-[0.18em] text-brand-steel">NAVEGACIÓN</span>
-                <button
-                  type="button"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="text-brand-navy"
-                  aria-label="Cerrar menú de navegación"
-                >
-                  <X size={21} strokeWidth={1.5} />
-                </button>
-              </div>
-              <div className="flex flex-col gap-7 pt-10">
-                {navItems.map((item) => (
-                  <a
-                    key={item.href}
-                    href={item.href}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="text-2xl font-medium tracking-[-0.03em] text-brand-navy"
-                  >
-                    {item.label}
-                  </a>
-                ))}
-              </div>
-            </div>
+        {mobileMenuOpen && <div className="fixed inset-0 z-50 bg-brand-navy/30 lg:hidden" role="dialog" aria-modal="true">
+          <div className="absolute right-0 top-0 h-full w-[min(22rem,90vw)] bg-brand-white p-6 shadow-xl">
+            <div className="flex justify-between border-b border-brand-steel/20 pb-5"><span className="text-xs tracking-[0.16em]">NAVEGACIÓN</span><button type="button" aria-label="Cerrar menú" onClick={() => setMobileMenuOpen(false)}><X size={22} /></button></div>
+            <div className="flex flex-col gap-6 pt-8">{nav.map(([label, href]) => <a key={href} href={href} onClick={() => setMobileMenuOpen(false)} className="text-xl">{label}</a>)}<Button className="mt-3 rounded-none bg-brand-navy text-brand-white" onClick={() => { window.location.hash = "reservar"; setMobileMenuOpen(false) }}>Reservar cita</Button></div>
           </div>
-        )}
+        </div>}
       </header>
 
       <main>
-        <section className="mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-10 lg:py-32">
-          <div>
-            <p className="mb-8 text-xs font-medium tracking-[0.28em] text-brand-steel">
-              ADVANCED SKIN AESTHETICS
-            </p>
-            <h1 className="max-w-4xl text-5xl leading-[0.98] font-medium tracking-[-0.05em] sm:text-7xl lg:text-8xl">
-              La piel bien cuidada se nota.
-            </h1>
-            <p className="mt-8 max-w-lg text-lg leading-relaxed text-brand-steel">
-              Cuidado facial experto, protocolos precisos y acompañamiento personalizado para tu piel.
-            </p>
-            <div className="mt-10 flex flex-col items-start gap-5 sm:flex-row sm:items-center">
-              <a
-                href="#contacto"
-                className="inline-flex h-12 items-center gap-2 rounded-none bg-brand-champagne px-7 text-sm font-medium text-brand-navy hover:bg-brand-champagne/90"
-              >
-                Agendar Consulta
-                <ArrowUpRight />
-              </a>
-              <span className="text-xs tracking-[0.16em] text-brand-steel">
-                FLORIDA LICENSED FACIAL SKIN SPECIALIST
-              </span>
-            </div>
-          </div>
-        </section>
-
-        <section id="servicios" className="border-t border-brand-steel/20 bg-white">
-          <div className="mx-auto max-w-7xl px-6 py-20 sm:py-28 lg:px-10">
-            <div className="mb-12 flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
-              <div>
-                <p className="mb-4 text-xs font-medium tracking-[0.24em] text-brand-steel">01 / SERVICIOS</p>
-                <h2 className="text-4xl font-medium tracking-[-0.04em] sm:text-5xl">
-                  Tratamientos faciales y corporales.
-                </h2>
-              </div>
-              <p className="max-w-sm text-sm leading-relaxed text-brand-steel">
-                Cada sesión comienza con una lectura detallada de tu piel y termina con un plan claro.
-              </p>
-            </div>
-            <div className="grid gap-10">
-              {serviceGroups.map((group, index) => (
-                <button
-                  key={group.id}
-                  type="button"
-                  id={group.id}
-                  onClick={() => setSelectedService(group)}
-                  className="group cursor-pointer text-left focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-champagne"
-                  aria-label={`Ver información de ${group.title}`}
-                >
-                  <Card className="gap-0 overflow-hidden rounded-none border-brand-navy/20 bg-brand-white p-0 text-brand-navy shadow-none transition-shadow group-hover:shadow-lg">
-                    <CardHeader className="flex flex-row items-start justify-between gap-6 px-8 pt-8">
-                      <div>
-                        <span className="text-xs tracking-[0.24em] text-brand-steel">0{index + 1} / SERVICIO</span>
-                        <CardTitle className="mt-4 text-3xl leading-tight font-medium tracking-[-0.04em]">{group.title}</CardTitle>
-                      </div>
-                      <ArrowUpRight className="mt-1 shrink-0 text-brand-champagne transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
-                    </CardHeader>
-                    <CardContent className="px-8 pt-5 pb-9">
-                      <p className="mb-7 max-w-xl text-sm leading-7 text-brand-steel">{group.intro}</p>
-                      <p className="text-xs font-medium tracking-[0.18em] text-brand-navy underline-offset-4 group-hover:underline">
-                        VER INFORMACIÓN
-                      </p>
-                    </CardContent>
-                  </Card>
-                </button>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Productos: sección reservada para una futura etapa del sitio.
-        <section id="productos" className="bg-brand-white">
-          <div className="mx-auto max-w-7xl px-6 py-20 sm:py-28 lg:px-10">
-            <div className="mb-12 flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
-              <div>
-                <p className="mb-4 text-xs font-medium tracking-[0.24em] text-brand-steel">02 / TIENDA DE CUIDADO</p>
-                <h2 className="text-4xl font-medium tracking-[-0.04em] sm:text-5xl">Lo esencial, bien elegido.</h2>
-              </div>
-              <p className="max-w-sm text-sm leading-relaxed text-brand-steel">
-                Arma tu carrito y cotiza facilmente. Te confirmo disponibilidad y entrega personalmente.
-              </p>
-            </div>
-            <div className="grid gap-5 md:grid-cols-3">
-              {products.map((product) => (
-                <button
-                  key={product.id}
-                  type="button"
-                  onClick={() => setSelectedProduct(product)}
-                  className="group block text-left"
-                  aria-label={`Ver información de ${product.name}`}
-                >
-                  <Card className="gap-0 overflow-hidden rounded-none border-brand-steel/30 bg-transparent p-0 shadow-none transition-shadow group-hover:shadow-lg">
-                  <div className="relative aspect-[4/3] overflow-hidden bg-brand-navy">
-                    <Image
-                      src={product.image}
-                      alt={product.name}
-                      fill
-                      className="object-cover transition-transform duration-500 hover:scale-105"
-                      sizes="(max-width: 768px) 100vw, 33vw"
-                    />
-                    <span className="absolute top-4 left-4 bg-brand-navy/85 px-3 py-1 text-[10px] tracking-[0.16em] text-brand-white">
-                      {product.category}
-                    </span>
-                  </div>
-                  <CardHeader className="gap-3 px-6 pt-6 pb-0">
-                    <CardTitle className="text-xl font-medium text-brand-navy">{product.name}</CardTitle>
-                  </CardHeader>
-                  <CardContent className="px-6 pt-5 pb-6">
-                    <p className="text-sm leading-relaxed text-brand-steel">{product.description}</p>
-                    <p className="mt-5 text-xs font-medium tracking-[0.14em] text-brand-navy underline-offset-4 group-hover:underline">
-                      VER INFORMACIÓN
-                    </p>
-                  </CardContent>
-                </Card>
-                </button>
-              ))}
-            </div>
-          </div>
-        </section> */}
-
-        <section className="relative overflow-hidden bg-brand-navy text-brand-white">
-          <div className="mx-auto max-w-7xl px-6 py-20 sm:py-24 lg:px-10">
-            <div className="max-w-3xl">
-              <p className="mb-4 text-xs font-medium tracking-[0.24em] text-brand-champagne">03 / CONFIANZA</p>
-              <h2 className="max-w-2xl text-4xl font-medium tracking-[-0.04em] sm:text-6xl">
-                Tu piel merece un plan, no una promesa.
-              </h2>
-              <p className="mt-6 max-w-lg text-sm leading-relaxed text-brand-steel">
-                Evaluación honesta, técnica y acompañamiento para que cada decisión tenga sentido para tu piel.
-              </p>
-              <a
-                href="#contacto"
-                className="mt-8 inline-flex h-12 items-center gap-2 rounded-none bg-brand-champagne px-7 text-sm font-medium text-brand-navy hover:bg-brand-champagne/90"
-              >
-                Agendar Consulta
-                <ArrowUpRight />
-              </a>
-            </div>
-          </div>
-        </section>
-
-        <section id="contacto" className="bg-brand-champagne">
-          <div className="mx-auto grid max-w-7xl gap-10 px-6 py-20 sm:py-24 lg:grid-cols-[1fr_auto] lg:items-end lg:px-10">
+        <section id="inicio" className="mx-auto max-w-7xl px-5 py-14 sm:py-20 lg:px-10 lg:py-28">
+          <div className="grid items-center gap-10 lg:grid-cols-[1fr_0.9fr]">
             <div>
-              <p className="mb-4 text-xs font-medium tracking-[0.24em] text-brand-steel">04 / EMPECEMOS</p>
-              <h2 className="max-w-2xl text-4xl font-medium tracking-[-0.04em] sm:text-6xl">
-                Hablemos de lo que tu piel necesita.
-              </h2>
+              <p className="mb-5 text-xs font-medium tracking-[0.24em] text-brand-steel">ARECIO RODRÍGUEZ · ESTÉTICA AVANZADA</p>
+              <h1 className="max-w-3xl text-5xl font-medium leading-[.98] tracking-[-.05em] sm:text-7xl">Tu piel, cuidada con criterio.</h1>
+              <p className="mt-7 max-w-lg text-lg leading-relaxed text-brand-steel">Tratamientos faciales y corporales personalizados para una piel saludable, fuerte y verdaderamente tuya.</p>
+              <Button size="lg" className="mt-9 h-14 rounded-none bg-brand-champagne px-8 text-base text-brand-navy hover:bg-brand-champagne/90" onClick={() => { window.location.hash = "reservar" }}>Reservar cita <ArrowUpRight size={18} /></Button>
             </div>
-            <a
-              href={`https://wa.me/${whatsappNumber}`}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex h-12 items-center gap-2 bg-brand-navy px-7 text-sm font-medium text-brand-white hover:bg-brand-navy/90"
-            >
-              Escribir por WhatsApp
-              <ArrowUpRight size={16} />
-            </a>
+            <div className="relative aspect-[4/3] overflow-hidden bg-brand-navy"><Image src="/media/portadas_selfies_perfiles/portada_home.jpeg" alt="Arecio Rodríguez trabajando en estética" fill priority className="object-cover" sizes="(max-width: 1024px) 100vw, 45vw" /></div>
           </div>
         </section>
 
+        <section id="sobre-mi" className="border-y border-brand-steel/20 bg-white"><div className="mx-auto grid max-w-7xl gap-8 px-5 py-16 sm:py-20 lg:grid-cols-[.7fr_1.3fr] lg:px-10"><div><p className="text-xs tracking-[.24em] text-brand-steel">SOBRE MÍ</p><h2 className="mt-4 text-4xl font-medium tracking-[-.04em]">Experiencia que se adapta a ti.</h2></div><div className="max-w-2xl text-base leading-relaxed text-brand-steel"><p>Con más de 10 años de experiencia en estética facial y corporal, Arecio Rodríguez acompaña cada piel con protocolos personalizados y orientados a resultados.</p><p className="mt-4">Certified Full Specialist en Florida, trabaja acné, hiperpigmentación, textura, cicatrices y signos del envejecimiento combinando técnicas profesionales, activos y tecnología estética avanzada.</p><a href="/sobre-mi" className="mt-6 inline-flex items-center gap-2 font-medium text-brand-navy underline underline-offset-4">Conocer más sobre Arecio <ArrowUpRight size={16} /></a></div></div></section>
+
+        {(["Facial", "Corporal"] as const).map((category) => <section key={category} id={category === "Facial" ? "tratamientos-faciales" : "tratamientos-corporales"} className="mx-auto max-w-7xl px-5 py-16 sm:py-20 lg:px-10">
+          <div className="mb-10 flex flex-col justify-between gap-4 sm:flex-row sm:items-end"><div><p className="text-xs tracking-[.24em] text-brand-steel">TRATAMIENTOS {category.toUpperCase()}ES</p><h2 className="mt-3 text-4xl font-medium tracking-[-.04em]">{category === "Facial" ? "Protocolos para el rostro." : "Cuidado corporal con propósito."}</h2></div><p className="max-w-sm text-sm leading-relaxed text-brand-steel">Valoración previa, protocolo claro y acompañamiento profesional.</p></div>
+          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">{treatments.filter((treatment) => treatment.category === category).map((treatment) => <TreatmentCard key={treatment.id} treatment={treatment} onSelect={setSelectedTreatment} />)}</div>
+        </section>)}
+
+        <section id="tratamientos-necesidad" className="bg-brand-navy text-brand-white"><div className="mx-auto max-w-7xl px-5 py-16 sm:py-20 lg:px-10"><p className="text-xs tracking-[.24em] text-brand-champagne">TRATAMIENTOS POR NECESIDAD</p><h2 className="mt-3 max-w-2xl text-4xl font-medium tracking-[-.04em] sm:text-5xl">Elige lo que quieres trabajar.</h2><div className="mt-9 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">{needs.map((need) => <button type="button" key={need.id} onClick={() => setSelectedNeed(need.id)} aria-pressed={selectedNeed === need.id} className={`border px-4 py-4 text-left text-sm transition ${selectedNeed === need.id ? "border-brand-champagne bg-brand-champagne text-brand-navy" : "border-brand-steel/50 hover:border-brand-champagne"}`}>{need.label}</button>)}</div><div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">{filteredTreatments.map((treatment) => <TreatmentCard key={treatment.id} treatment={treatment} onSelect={setSelectedTreatment} dark />)}</div></div></section>
+
+        <section id="resultados" className="mx-auto max-w-7xl px-5 py-16 sm:py-20 lg:px-10"><p className="text-xs tracking-[.24em] text-brand-steel">ANTES Y DESPUÉS / RESULTADOS</p><h2 className="mt-3 text-4xl font-medium tracking-[-.04em] sm:text-5xl">Resultados reales, con autorización.</h2><p className="mt-5 max-w-2xl text-sm leading-relaxed text-brand-steel">Cada resultado es personal y progresivo. Estos collages documentan tratamientos realizados y compartidos con autorización.</p><div className="mt-10 grid gap-6 md:grid-cols-2"><ResultImage src="/media/before_after/limpieza_facial_regular.jpeg" alt="Resultado autorizado de limpieza facial regular" title="Limpieza facial regular" /><ResultImage src="/media/before_after/limpieza_facial_profunda.jpeg" alt="Resultado autorizado de limpieza facial profunda" title="Limpieza facial profunda" /></div></section>
+
+        <section id="reservar" className="bg-brand-champagne"><div className="mx-auto flex max-w-7xl flex-col justify-between gap-8 px-5 py-16 sm:py-20 lg:flex-row lg:items-end lg:px-10"><div><p className="text-xs tracking-[.24em] text-brand-steel">RESERVAR CITA</p><h2 className="mt-3 max-w-2xl text-4xl font-medium tracking-[-.04em] sm:text-5xl">Empecemos con una valoración.</h2><p className="mt-5 max-w-lg text-sm leading-relaxed text-brand-steel">Cuéntame qué te gustaría mejorar y coordinamos tu próximo paso.</p></div><div className="flex flex-wrap gap-3"><Button className="h-12 rounded-none bg-brand-navy text-brand-white hover:bg-brand-navy/90" onClick={() => window.open(consultationFormUrl, "_blank")}>Completar formulario <ArrowUpRight size={16} /></Button><Button variant="outline" className="h-12 rounded-none border-brand-navy text-brand-navy" onClick={() => window.open(`https://wa.me/${whatsappNumber}`, "_blank")}>WhatsApp</Button></div></div></section>
+
+        <section id="contacto" className="mx-auto max-w-7xl px-5 py-16 sm:py-20 lg:px-10"><div className="grid gap-10 lg:grid-cols-2"><div><p className="text-xs tracking-[.24em] text-brand-steel">CONTACTO</p><h2 className="mt-3 text-4xl font-medium tracking-[-.04em]">Hablemos de tu piel.</h2><div className="mt-8 space-y-4 text-sm text-brand-steel"><a className="flex items-center gap-3 hover:text-brand-navy" href={`https://wa.me/${whatsappNumber}`}><Phone size={17} /> +1 (786) 617-0823 · WhatsApp</a><a className="flex items-center gap-3 hover:text-brand-navy" href="mailto:rodriguezarecio@gmail.com"><Mail size={17} /> rodriguezarecio@gmail.com</a><p className="flex items-start gap-3"><MapPin size={17} className="mt-0.5 shrink-0" />10522 W Flagler, Miami FL 33174 · 2do piso</p></div></div><form className="grid gap-4" action={`mailto:rodriguezarecio@gmail.com`} method="post" encType="text/plain"><label className="grid gap-2 text-sm">Nombre<input name="nombre" required className="h-11 border border-brand-steel/30 bg-white px-3" /></label><label className="grid gap-2 text-sm">Email<input name="email" type="email" required className="h-11 border border-brand-steel/30 bg-white px-3" /></label><label className="grid gap-2 text-sm">¿En qué te puedo ayudar?<textarea name="mensaje" rows={4} className="border border-brand-steel/30 bg-white p-3" /></label><Button type="submit" className="h-12 w-fit rounded-none bg-brand-navy text-brand-white hover:bg-brand-navy/90">Enviar consulta</Button></form></div></section>
       </main>
+      <footer className="bg-brand-navy px-5 py-10 text-brand-white lg:px-10"><div className="mx-auto flex max-w-7xl flex-col justify-between gap-4 text-sm sm:flex-row"><span className="font-semibold tracking-[.18em]">ARECIO RODRÍGUEZ</span><span className="text-brand-steel">Skin health, considered.</span></div></footer>
 
-      <footer className="bg-brand-navy text-brand-white">
-        <div className="mx-auto grid max-w-7xl gap-12 px-6 py-14 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr] lg:px-10">
-          <div>
-            <p className="text-sm font-semibold tracking-[0.22em]">ARECIO RODRÍGUEZ</p>
-            <p className="mt-5 max-w-xs text-sm leading-relaxed text-brand-steel">
-              Advanced skin aesthetics para una piel saludable, fuerte y verdaderamente tuya.
-            </p>
-          </div>
-          <div className="space-y-4 text-sm text-brand-steel">
-            <p className="text-xs tracking-[0.18em] text-brand-champagne">CONTACTO</p>
-            <a className="flex items-center gap-3 hover:text-brand-white" href={`tel:+${whatsappNumber}`}>
-              <Phone size={15} /> +1 (786) 617-0823
-            </a>
-            <a className="flex items-center gap-3 hover:text-brand-white" href="mailto:rodriguezarecio@gmail.com">
-              <Mail size={15} /> rodriguezarecio@gmail.com
-            </a>
-            <p className="flex items-start gap-3">
-              <MapPin size={15} className="mt-0.5 shrink-0" /> 10522 W Flagler, Miami FL 33174 · 2do piso
-            </p>
-          </div>
-          <div className="space-y-4 text-sm text-brand-steel">
-            <p className="text-xs tracking-[0.18em] text-brand-champagne">ATENCIÓN</p>
-            <p className="flex items-center gap-2"><Check size={15} /> Skin Care Specialist</p>
-            <p className="flex items-center gap-2"><Check size={15} /> Atención personalizada</p>
-            <a
-              href={consultationFormUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="block pt-1 text-brand-champagne underline-offset-4 hover:underline"
-            >
-              Completar formulario de consulta
-            </a>
-          </div>
-        </div>
-        <div className="border-t border-brand-steel/30 px-6 py-5 text-xs text-brand-steel lg:px-10">
-          <div className="mx-auto flex max-w-7xl justify-between gap-4">
-            <span>© 2024 Arecio Rodríguez</span>
-            <span>Skin health, considered.</span>
-          </div>
-        </div>
-      </footer>
-
-      {/* Notificación de Productos: conservar para activación futura.
-      {addedProduct && (
-        <div className="fixed top-5 right-5 z-[60] w-[min(22rem,calc(100vw-2.5rem))] border border-brand-steel/20 bg-brand-white p-4 shadow-2xl">
-          <div className="flex items-start gap-3">
-            <div className="relative size-16 shrink-0 overflow-hidden bg-brand-navy">
-              <Image src={addedProduct.image} alt="" fill className="object-cover" sizes="64px" />
-            </div>
-            <div className="min-w-0 flex-1">
-              <div className="flex items-start justify-between gap-3">
-                <p className="text-sm font-medium">Añadido a tu carrito</p>
-                <button type="button" onClick={() => setAddedProduct(null)} aria-label="Cerrar notificación">
-                  <X size={17} />
-                </button>
-              </div>
-              <p className="mt-1 truncate text-sm text-brand-steel">{addedProduct.name}</p>
-              <button
-                type="button"
-                onClick={() => {
-                  setAddedProduct(null)
-                  setCartOpen(true)
-                }}
-                className="mt-3 text-xs font-medium tracking-[0.14em] underline underline-offset-4"
-              >
-                VER SELECCIÓN ({cartCount})
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      */}
-
-      {/* Modal de producto: conservar para activación futura.
-      {selectedProduct && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-5">
-          <button
-            type="button"
-            aria-label="Cerrar información"
-            className="absolute inset-0 bg-brand-navy/50 backdrop-blur-sm"
-            onClick={() => setSelectedProduct(null)}
-          />
-          <article className="relative grid max-h-[90vh] w-full max-w-4xl overflow-y-auto bg-brand-white md:grid-cols-2">
-            <div className="relative min-h-[20rem] bg-brand-navy md:min-h-[34rem]">
-              <Image
-                src={selectedProduct.image}
-                alt={selectedProduct.name}
-                fill
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, 50vw"
-              />
-            </div>
-            <div className="flex flex-col justify-center p-7 sm:p-10">
-              <button
-                type="button"
-                onClick={() => setSelectedProduct(null)}
-                aria-label="Cerrar información"
-                className="absolute top-5 right-5"
-              >
-                <X size={22} />
-              </button>
-              <p className="text-xs tracking-[0.2em] text-brand-steel">{selectedProduct.category}</p>
-              <h2 className="mt-4 text-3xl font-medium tracking-[-0.04em]">{selectedProduct.name}</h2>
-              <p className="mt-6 text-base leading-relaxed text-brand-steel">{selectedProduct.description}</p>
-              <p className="mt-6 text-sm leading-relaxed text-brand-steel">
-                Selección profesional para acompañar tu rutina y mantener el cuidado de tu piel.
-              </p>
-              <Button
-                type="button"
-                onClick={() => addToCart(selectedProduct)}
-                className="mt-9 h-12 rounded-none bg-brand-navy text-brand-white hover:bg-brand-navy/90"
-              >
-                Añadir al carrito
-                <Plus size={17} />
-              </Button>
-            </div>
-          </article>
-        </div>
-      )}
-      */}
-
-      {selectedService && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-5">
-          <button
-            type="button"
-            aria-label="Cerrar información del servicio"
-            className="absolute inset-0 bg-brand-navy/50 backdrop-blur-sm"
-            onClick={() => setSelectedService(null)}
-          />
-          <article className="relative max-h-[90vh] w-full max-w-5xl overflow-y-auto bg-brand-white">
-            <div className="p-7 sm:p-10">
-              <button
-                type="button"
-                onClick={() => setSelectedService(null)}
-                aria-label="Cerrar información del servicio"
-                className="absolute top-5 right-5"
-              >
-                <X size={22} />
-              </button>
-              <p className="text-xs tracking-[0.2em] text-brand-steel">SERVICIOS ESPECIALIZADOS</p>
-              <h2 className="mt-4 text-4xl font-medium tracking-[-0.04em]">{selectedService.title}</h2>
-              <p className="mt-6 max-w-lg text-base leading-relaxed text-brand-steel">{selectedService.intro}</p>
-              {selectedService.featuredTreatments?.map((treatment) => (
-                <div key={treatment.title} className="mt-8 grid gap-8 border-t border-brand-steel/20 pt-8 md:grid-cols-[0.8fr_1.2fr]">
-                  <div className="relative overflow-hidden bg-brand-white">
-                    <Image
-                      src={treatment.beforeAfterImage}
-                      alt={`Antes y después de ${treatment.title}`}
-                      width={1200}
-                      height={1600}
-                      className="h-auto w-full object-contain"
-                      sizes="(max-width: 768px) 100vw, 35vw"
-                    />
-                  </div>
-                  <div>
-                    <h3 className="text-2xl font-medium tracking-[-0.03em]">{treatment.title}</h3>
-                    <p className="mt-4 text-sm leading-relaxed text-brand-steel">{treatment.description}</p>
-                    <p className="mt-7 mb-3 text-xs font-medium tracking-[0.18em] text-brand-steel">PROTOCOLO</p>
-                    <ol className="grid gap-3 text-sm leading-relaxed text-brand-navy">
-                      {treatment.protocol.map((step, index) => (
-                        <li key={step}>
-                          {`${index + 1}. ${step}`}
-                        </li>
-                      ))}
-                    </ol>
-                    <p className="mt-6 text-sm font-medium text-brand-navy">
-                      Duración del tratamiento: {treatment.duration}
-                    </p>
-                  </div>
-                </div>
-              ))}
-              {selectedService.featuredTreatments && (
-                <p className="mt-8 border-l-2 border-brand-champagne pl-4 text-sm leading-relaxed text-brand-steel">
-                  Nota: Todos los tratamientos están sujetos a una evaluación previa de la piel. El protocolo podrá
-                  ser adaptado según el tipo, condición y necesidades específicas de cada piel, siempre bajo el
-                  criterio profesional del especialista, con el objetivo de garantizar un tratamiento seguro,
-                  personalizado y adecuado para cada cliente.
-                </p>
-              )}
-              <div className="mt-8 border-t border-brand-steel/20 pt-6">
-                <p className="mb-4 text-xs font-medium tracking-[0.18em] text-brand-steel">DISPONIBLE EN CONSULTA</p>
-                <ul className="grid gap-x-8 gap-y-3 sm:grid-cols-2">
-                  {selectedService.services.map((service) => (
-                    <li key={service} className="flex items-start gap-2 text-sm text-brand-navy">
-                      <span className="mt-2 size-1.5 shrink-0 rounded-full bg-brand-champagne" />
-                      <span>{service}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <a
-                href="#contacto"
-                onClick={() => setSelectedService(null)}
-                className="mt-9 inline-flex h-12 items-center gap-2 bg-brand-navy px-7 text-sm font-medium text-brand-white hover:bg-brand-navy/90"
-              >
-                Consultar disponibilidad
-                <ArrowUpRight size={17} />
-              </a>
-            </div>
-          </article>
-        </div>
-      )}
-
-      {/* Panel del carrito: conservar para activación futura.
-      {cartOpen && (
-        <div className="fixed inset-0 z-50">
-          <button
-            type="button"
-            aria-label="Cerrar carrito"
-            className="absolute inset-0 bg-brand-navy/40 backdrop-blur-sm"
-            onClick={() => setCartOpen(false)}
-          />
-          <aside className="absolute top-0 right-0 flex h-full w-full max-w-md flex-col bg-brand-white shadow-2xl">
-            <div className="flex items-center justify-between border-b border-brand-steel/20 px-6 py-5">
-              <div>
-                <p className="text-xs tracking-[0.18em] text-brand-steel">TU SELECCIÓN</p>
-                <h2 className="mt-1 text-2xl font-medium">Carrito</h2>
-              </div>
-              <button type="button" onClick={() => setCartOpen(false)} aria-label="Cerrar carrito">
-                <X size={22} />
-              </button>
-            </div>
-            {cart.length === 0 ? (
-              <div className="flex flex-1 flex-col items-center justify-center px-8 text-center">
-                <ShoppingBag size={32} strokeWidth={1} className="mb-5 text-brand-steel" />
-                <p className="text-lg font-medium">Tu carrito está vacío</p>
-                <p className="mt-2 text-sm text-brand-steel">Añade productos para tu carrito de compras.</p>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setCartOpen(false)
-                    document.querySelector("#productos")?.scrollIntoView({ behavior: "smooth" })
-                  }}
-                  className="mt-7 border-b border-brand-navy pb-1 text-xs font-medium tracking-[0.14em]"
-                >
-                  VER PRODUCTOS
-                </button>
-              </div>
-            ) : (
-              <>
-                <div className="flex-1 space-y-5 overflow-y-auto px-6 py-6">
-                  {cart.map((item) => (
-                    <div key={item.id} className="flex gap-4">
-                      <div className="relative size-20 shrink-0 overflow-hidden bg-brand-navy">
-                        <Image src={item.image} alt="" fill className="object-cover" sizes="80px" />
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <div className="flex justify-between gap-3">
-                          <p className="text-sm font-medium">{item.name}</p>
-                          <button
-                            type="button"
-                            onClick={() => setCart((current) => current.filter((cartItem) => cartItem.id !== item.id))}
-                            aria-label={`Eliminar ${item.name}`}
-                            className="text-brand-steel hover:text-brand-navy"
-                          >
-                            <Trash2 size={15} />
-                          </button>
-                        </div>
-                        <div className="mt-3 flex items-center gap-3">
-                          <button type="button" onClick={() => updateQuantity(item.id, -1)} aria-label="Reducir cantidad">
-                            <Minus size={14} />
-                          </button>
-                          <span className="min-w-5 text-center text-sm">{item.quantity}</span>
-                          <button type="button" onClick={() => updateQuantity(item.id, 1)} aria-label="Aumentar cantidad">
-                            <Plus size={14} />
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <div className="border-t border-brand-steel/20 px-6 py-6">
-                  <Button
-                    type="button"
-                    onClick={sendOrderToWhatsApp}
-                    className="h-12 w-full rounded-none bg-brand-navy text-brand-white hover:bg-brand-navy/90"
-                  >
-                    Solicitar tratamiento
-                    <ArrowUpRight size={17} />
-                  </Button>
-                  <p className="mt-3 text-center text-xs leading-relaxed text-brand-steel">
-                    Revisaremos tu selección para coordinar los siguientes pasos.
-                  </p>
-                </div>
-              </>
-            )}
-          </aside>
-        </div>
-      )}
-      */}
+      {selectedTreatment && <div className="fixed inset-0 z-50 flex items-center justify-center p-5" role="dialog" aria-modal="true" aria-labelledby="treatment-title"><button type="button" className="absolute inset-0 bg-brand-navy/60" aria-label="Cerrar información" onClick={() => setSelectedTreatment(null)} /><article className="relative max-h-[90vh] w-full max-w-3xl overflow-y-auto bg-brand-white p-7 sm:p-10"><button type="button" className="absolute right-5 top-5" aria-label="Cerrar información" onClick={() => setSelectedTreatment(null)}><X size={21} /></button><p className="text-xs tracking-[.2em] text-brand-steel">{selectedTreatment.category.toUpperCase()}</p><h2 id="treatment-title" className="mt-3 text-3xl font-medium">{selectedTreatment.name}</h2>{selectedTreatment.resultImage && <Image src={selectedTreatment.resultImage} alt={`Collage de resultados de ${selectedTreatment.name}`} width={900} height={1200} className="mt-6 max-h-80 w-full object-contain" /> }<p className="mt-4 text-sm leading-relaxed text-brand-steel">{selectedTreatment.description}</p><div className="mt-7 grid gap-7 sm:grid-cols-2"><div><h3 className="text-xs tracking-[.16em] text-brand-steel">BENEFICIOS</h3><ul className="mt-3 list-disc space-y-2 pl-5 text-sm">{selectedTreatment.benefits.map((benefit) => <li key={benefit}>{benefit}</li>)}</ul></div><div><h3 className="text-xs tracking-[.16em] text-brand-steel">PROTOCOLO</h3><ol className="mt-3 space-y-2 text-sm">{selectedTreatment.protocol.map((step, index) => <li key={step}>{index + 1}. {step}</li>)}</ol></div></div><div className="mt-7 border-t border-brand-steel/20 pt-5 text-sm"><p><strong>Duración:</strong> {selectedTreatment.duration}</p><p className="mt-2"><strong>Precio:</strong> {selectedTreatment.price}</p><p className="mt-5 text-brand-steel">{professionalNote}</p></div><Button className="mt-7 rounded-none bg-brand-navy text-brand-white hover:bg-brand-navy/90" onClick={() => { setSelectedTreatment(null); window.location.hash = "reservar" }}>Reservar este tratamiento <ArrowUpRight size={16} /></Button></article></div>}
     </div>
   )
+}
+
+function TreatmentCard({ treatment, onSelect, dark = false }: { treatment: Treatment; onSelect: (treatment: Treatment) => void; dark?: boolean }) {
+  return <Card className={`flex flex-col rounded-none p-0 shadow-none ${dark ? "border-brand-steel/60 bg-brand-navy text-brand-white" : "border-brand-steel/25 bg-white"}`}><CardHeader className="px-6 pt-6"><CardTitle className="text-xl font-medium">{treatment.name}</CardTitle></CardHeader><CardContent className="flex flex-1 flex-col px-6 pb-6"><p className={`text-sm leading-relaxed ${dark ? "text-brand-steel" : "text-brand-steel"}`}>{treatment.description}</p><div className="mt-5 flex items-center justify-between gap-3 text-xs"><span>{treatment.duration}</span><span className="font-medium">{treatment.price}</span></div><Button type="button" onClick={() => onSelect(treatment)} variant={dark ? "outline" : "default"} className={`mt-6 w-full rounded-none ${dark ? "border-brand-champagne text-brand-white hover:bg-brand-champagne hover:text-brand-navy" : "bg-brand-navy text-brand-white hover:bg-brand-navy/90"}`}>Ver protocolo y reservar</Button></CardContent></Card>
+}
+
+function ResultImage({ src, alt, title }: { src: string; alt: string; title: string }) {
+  return <figure className="overflow-hidden border border-brand-steel/20 bg-white"><Image src={src} alt={alt} width={1200} height={1600} className="h-auto w-full object-contain" sizes="(max-width: 768px) 100vw, 50vw" /><figcaption className="px-5 py-4 text-sm font-medium">{title} · resultado autorizado</figcaption></figure>
 }
