@@ -186,7 +186,7 @@ export default function Home() {
           <div className="grid items-center gap-10 lg:grid-cols-[1fr_0.9fr]">
             <div>
               <p className="mb-5 text-xs font-medium tracking-[0.24em] text-brand-steel">ARECIO RODRÍGUEZ · ESTÉTICA AVANZADA</p>
-              <h1 className="max-w-3xl text-5xl font-medium leading-[.98] tracking-[-.05em] sm:text-7xl">Tu piel, cuidada con criterio.</h1>
+              <h1 className="max-w-3xl text-5xl font-medium leading-[.98] tracking-[-.05em] sm:text-7xl">Ciencia, experiencia y resultados para tu piel.</h1>
               <p className="mt-7 max-w-lg text-lg leading-relaxed text-brand-steel">Tratamientos faciales y corporales personalizados para una piel saludable, fuerte y verdaderamente tuya.</p>
               <Button size="lg" className="mt-9 h-14 rounded-none bg-brand-champagne px-8 text-base text-brand-navy hover:bg-brand-champagne/90" onClick={() => { window.location.hash = "reservar" }}>Reservar cita <ArrowUpRight size={18} /></Button>
             </div>
