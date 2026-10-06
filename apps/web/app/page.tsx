@@ -118,10 +118,10 @@ export default function Home() {
           <a href="#inicio" className="text-sm font-semibold tracking-[0.18em]">ARECIO RODRÍGUEZ</a>
           <div className="hidden items-center gap-5 text-xs font-medium tracking-[0.08em] text-brand-steel lg:flex">
             {nav.map(([label, href]) => label === "Faciales" ? (
-              <button key={href} type="button" onClick={() => { setFacialWizardStep(0); setFacialWizardOpen(true) }} className="hover:text-brand-navy">{label}</button>
+              <button key={label} type="button" onClick={() => { setFacialWizardStep(0); setFacialWizardOpen(true) }} className="hover:text-brand-navy">{label}</button>
             ) : label === "Tratamientos faciales" ? (
-              <button key={href} type="button" onClick={() => { setTreatmentWizardStep(0); setTreatmentWizardOpen(true) }} className="hover:text-brand-navy">{label}</button>
-            ) : <a key={href} href={href} className="hover:text-brand-navy">{label}</a>)}
+              <button key={label} type="button" onClick={() => { setTreatmentWizardStep(0); setTreatmentWizardOpen(true) }} className="hover:text-brand-navy">{label}</button>
+            ) : <a key={label} href={href} className="hover:text-brand-navy">{label}</a>)}
           </div>
           <div className="flex items-center gap-3">
             <Button className="hidden rounded-none bg-brand-navy text-brand-white hover:bg-brand-navy/90 sm:inline-flex" onClick={() => { window.location.hash = "reservar" }}>Reservar cita</Button>
@@ -133,10 +133,10 @@ export default function Home() {
           <div className="absolute right-0 top-0 h-full w-[min(22rem,90vw)] bg-brand-white p-6 shadow-xl">
             <div className="flex justify-between border-b border-brand-steel/20 pb-5"><span className="text-xs tracking-[0.16em]">NAVEGACIÓN</span><button type="button" aria-label="Cerrar menú" onClick={() => setMobileMenuOpen(false)}><X size={22} /></button></div>
             <div className="flex flex-col gap-6 pt-8">{nav.map(([label, href]) => label === "Faciales" ? (
-              <button key={href} type="button" onClick={() => { setFacialWizardStep(0); setFacialWizardOpen(true); setMobileMenuOpen(false) }} className="text-left text-xl">{label}</button>
+              <button key={label} type="button" onClick={() => { setFacialWizardStep(0); setFacialWizardOpen(true); setMobileMenuOpen(false) }} className="text-left text-xl">{label}</button>
             ) : label === "Tratamientos faciales" ? (
-              <button key={href} type="button" onClick={() => { setTreatmentWizardStep(0); setTreatmentWizardOpen(true); setMobileMenuOpen(false) }} className="text-left text-xl">{label}</button>
-            ) : <a key={href} href={href} onClick={() => setMobileMenuOpen(false)} className="text-xl">{label}</a>)}<Button className="mt-3 rounded-none bg-brand-navy text-brand-white" onClick={() => { window.location.hash = "reservar"; setMobileMenuOpen(false) }}>Reservar cita</Button></div>
+              <button key={label} type="button" onClick={() => { setTreatmentWizardStep(0); setTreatmentWizardOpen(true); setMobileMenuOpen(false) }} className="text-left text-xl">{label}</button>
+            ) : <a key={label} href={href} onClick={() => setMobileMenuOpen(false)} className="text-xl">{label}</a>)}<Button className="mt-3 rounded-none bg-brand-navy text-brand-white" onClick={() => { window.location.hash = "reservar"; setMobileMenuOpen(false) }}>Reservar cita</Button></div>
           </div>
         </div>}
       </header>
