@@ -1,6 +1,6 @@
 # Arecio Rodríguez · Advanced Skin Aesthetics
 
-Landing bilingüe (EN/ES) para Arecio Rodríguez, Florida Licensed Facial Skin Specialist en Miami.
+Landing bilingüe (EN/ES) para Arecio Rodríguez, Florida Licensed Facial Skin Specialist in Miami.
 
 **Stack:** Bun · Next.js 16 (App Router) · TypeScript · Tailwind CSS v4 · desplegable en Vercel (DNS en Cloudflare).
 
