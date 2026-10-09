@@ -92,10 +92,10 @@ export function Hero() {
             </div>
           </div>
           <div className="mt-6 text-center">
-            <p className="text-[10px] tracking-[0.28em] text-clinic/60 uppercase">
+            <p className="text-[13px] tracking-[0.28em] text-gold uppercase">
               Miami · Florida
             </p>
-            <p className="mt-1 font-serif text-xl text-clinic">
+            <p className="mt-1 font-serif text-[23px] text-gold">
               {site.credential}
             </p>
           </div>
@@ -108,13 +108,13 @@ export function Hero() {
 export function Highlights() {
   const { t } = useLanguage()
   return (
-    <section className="border-b border-gold/25 bg-sand">
-      <div className="mx-auto grid max-w-7xl divide-y divide-gold/25 sm:grid-cols-3 sm:divide-x sm:divide-y-0 lg:px-10">
+    <section className="border-t border-gold/20 bg-navy-deep text-clinic">
+      <div className="mx-auto grid max-w-7xl divide-y divide-gold/20 sm:grid-cols-3 sm:divide-x sm:divide-y-0 lg:px-10">
         {t.highlights.map((item, i) => (
           <div key={item.title} className="px-5 py-10 sm:px-8">
             <span className="font-serif text-sm text-gold">0{i + 1}</span>
             <h2 className="mt-3 font-serif text-2xl">{item.title}</h2>
-            <p className="mt-3 text-sm leading-relaxed text-navy/75">
+            <p className="mt-3 text-sm leading-relaxed text-clinic/70">
               {item.body}
             </p>
           </div>
