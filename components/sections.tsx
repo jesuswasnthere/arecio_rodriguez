@@ -141,7 +141,7 @@ export function Services() {
               {t.services.title}
             </h2>
           </div>
-          <p className="max-w-lg bg-navy p-6 text-base leading-relaxed whitespace-pre-line text-white shadow-md shadow-navy/15 sm:p-8 lg:justify-self-end">
+          <p className="max-w-lg bg-navy p-6 text-base leading-relaxed whitespace-pre-line text-white shadow-md shadow-navy/15 sm:p-8 lg:-mb-24 lg:justify-self-end">
             {t.services.body}
           </p>
         </div>
