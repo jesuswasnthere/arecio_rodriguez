@@ -1,18 +1,15 @@
+import Image from "next/image"
+
 export function Logo({ className = "" }: { className?: string }) {
   return (
-    <span className={`flex items-center gap-2.5 sm:gap-3 ${className}`}>
-      <span className="flex size-9 shrink-0 items-center justify-center border border-gold/70 font-serif text-base text-gold sm:size-10 sm:text-lg">
-        AR
-      </span>
-      <span className="flex flex-col leading-none">
-        <span className="font-serif text-sm tracking-[0.1em] whitespace-nowrap uppercase sm:text-xl sm:tracking-[0.14em]">
-          Arecio Rodríguez
-        </span>
-        <span className="mt-1 hidden text-[9px] tracking-[0.32em] uppercase opacity-70 sm:block">
-          Advanced Skin Aesthetics
-        </span>
-      </span>
-    </span>
+    <Image
+      src="/images/logo.png"
+      alt="Arecio Rodríguez · Advanced Skin Aesthetics"
+      width={572}
+      height={255}
+      priority
+      className={`h-12 w-auto sm:h-14 ${className}`}
+    />
   )
 }
 

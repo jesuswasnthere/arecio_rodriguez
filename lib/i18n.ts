@@ -38,10 +38,10 @@ const en = {
     language: "Cambiar a español",
   },
   hero: {
-    eyebrow: "Florida Licensed Facial Skin Specialist",
-    title: "Clinical skin care,",
-    titleAccent: "results you can see.",
-    body: "Personalized facial and body treatments in Miami that combine professional technique, specialized actives and advanced aesthetic technology — always starting with a proper skin evaluation.",
+    eyebrow: "Arecio Rodríguez · Advanced Skin Aesthetics",
+    title: "Your skin deserves the extraordinary.",
+    titleAccent: "Experience, innovation and results that inspire confidence.",
+    body: "Discover a new experience in skin care. Personalized facial and body treatments that combine more than 10 years of experience, advanced aesthetic technology and high-quality actives to enhance your natural beauty.",
     primary: "Book your appointment",
     secondary: "Explore services",
     stats: [
@@ -231,10 +231,10 @@ const es: Dictionary = {
     language: "Switch to English",
   },
   hero: {
-    eyebrow: "Especialista en piel facial con licencia en Florida",
-    title: "Cuidado clínico de la piel,",
-    titleAccent: "resultados que se ven.",
-    body: "Tratamientos faciales y corporales personalizados en Miami que combinan técnica profesional, activos especializados y tecnología estética avanzada — siempre a partir de una evaluación de tu piel.",
+    eyebrow: "Arecio Rodríguez · Advanced Skin Aesthetics",
+    title: "Tu piel merece lo extraordinario.",
+    titleAccent: "Experiencia, innovación y resultados que inspiran confianza.",
+    body: "Descubre una nueva experiencia en el cuidado de tu piel. Tratamientos faciales y corporales personalizados que combinan más de 10 años de experiencia, tecnología estética avanzada y activos de alta calidad para realzar tu belleza natural.",
     primary: "Reserva tu cita",
     secondary: "Ver servicios",
     stats: [

@@ -40,11 +40,13 @@ export function Hero() {
       <div className="relative mx-auto grid max-w-7xl gap-12 px-5 pt-32 pb-16 lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:px-10 lg:pt-40 lg:pb-24">
         <div>
           <Eyebrow light>{t.hero.eyebrow}</Eyebrow>
-          <h1 className="mt-6 font-serif text-5xl leading-[1.02] font-medium sm:text-6xl lg:text-7xl">
+          <h1 className="mt-6 font-serif text-5xl leading-[1.05] font-medium sm:text-6xl lg:text-7xl">
             {t.hero.title}
-            <span className="block text-gold italic">{t.hero.titleAccent}</span>
           </h1>
-          <p className="mt-7 max-w-xl text-base leading-relaxed text-clinic/75 sm:text-lg">
+          <p className="mt-6 max-w-xl font-serif text-2xl leading-snug text-gold italic sm:text-3xl">
+            {t.hero.titleAccent}
+          </p>
+          <p className="mt-6 max-w-xl text-base leading-relaxed text-clinic/75 sm:text-lg">
             {t.hero.body}
           </p>
           <div className="mt-10 flex flex-wrap gap-3">
@@ -80,11 +82,11 @@ export function Hero() {
           <div className="relative aspect-[4/5] overflow-hidden bg-navy-deep">
             <Image
               src="/images/hero.jpg"
-              alt="Arecio Rodríguez, Florida licensed skin specialist"
+              alt="Arecio Rodríguez realizando un tratamiento facial"
               fill
               priority
               sizes="(max-width: 1024px) 90vw, 40vw"
-              className="object-cover object-top"
+              className="object-cover object-center"
             />
           </div>
           <div className="absolute -bottom-6 left-4 bg-clinic px-5 py-4 text-navy shadow-xl sm:-left-8">
@@ -207,7 +209,7 @@ export function Gallery() {
   const images = ["/images/result-regular.jpg", "/images/result-deep.jpg"]
 
   return (
-    <section id="gallery" className="bg-clinic pb-20 sm:pb-28">
+    <section id="gallery" className="scroll-mt-10 bg-clinic pb-20 sm:pb-28">
       <div className="mx-auto max-w-7xl px-5 lg:px-10">
         <div className="grid gap-10 bg-navy p-6 text-clinic sm:p-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-center lg:p-14">
           <div>
@@ -289,9 +291,10 @@ export function About() {
         </div>
 
         <div>
-          <Eyebrow>{t.about.eyebrow}</Eyebrow>
-          <h2 className="sr-only">{t.about.eyebrow}</h2>
-          <p className="mt-6 text-xs leading-relaxed tracking-[0.16em] text-steel uppercase">
+          <h2 className="font-serif text-4xl leading-tight font-medium sm:text-5xl">
+            {t.about.eyebrow}
+          </h2>
+          <p className="mt-4 text-xs leading-relaxed tracking-[0.16em] text-steel uppercase">
             {t.about.role}
           </p>
           <GoldRule className="mt-7" />
