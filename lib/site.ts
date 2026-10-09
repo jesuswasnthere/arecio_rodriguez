@@ -12,9 +12,8 @@ export const site = {
   email: "rodriguezarecio@gmail.com",
   instagram: "https://www.instagram.com/areciorodriguez_skinart",
   instagramHandle: "@areciorodriguez_skinart",
-  // Formulario de reserva / valoración (Google Forms). Cámbialo por Calendly, Square, Vagaro, etc.
-  bookingUrl:
-    "https://docs.google.com/forms/d/e/1FAIpQLSfe5g5Mb8y4f6dcsQYQPGOseGvbJt2HKMeL8JF7io0pB-62fg/viewform",
+  // Los botones "Reservar" abren WhatsApp directamente. Cámbialo por Calendly, Square, Vagaro, etc. si lo necesitas.
+  bookingUrl: "https://wa.me/17866170823",
   address: {
     line1: "10522 W Flagler St, 2nd Floor",
     line2: "Miami, FL 33174",

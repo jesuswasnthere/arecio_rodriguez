@@ -32,7 +32,7 @@ Paleta (`media/brand`): blanco clínico `#F7F8F8` (60%), navy `#102A3A` (25%), g
 - [ ] Sustituir las reseñas de ejemplo de `lib/i18n.ts` por reseñas reales (Google / Instagram).
 - [ ] Confirmar horario real en `lib/i18n.ts` → `visit.hours`.
 - [ ] Confirmar usuario de Instagram y `site.url` (dominio final) en `lib/site.ts`.
-- [ ] Opcional: cambiar `bookingUrl` (Google Forms) por Calendly / Square / Vagaro.
+- [ ] Opcional: cambiar `bookingUrl` (WhatsApp) por Calendly / Square / Vagaro.
 
 ## Deploy (Vercel + Cloudflare)
 
