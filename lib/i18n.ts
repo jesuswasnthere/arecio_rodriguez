@@ -4,10 +4,6 @@ export const languages: Lang[] = ["en", "es"]
 
 export type Service = {
   name: string
-  description: string
-  duration?: string
-  tags: string[]
-  featured?: boolean
 }
 
 export type ServiceGroup = {
@@ -31,6 +27,7 @@ const en = {
   },
   nav: {
     services: "Services",
+    gallery: "Gallery",
     about: "About",
     reviews: "Reviews",
     visit: "Visit Us",
@@ -71,12 +68,7 @@ const en = {
     eyebrow: "Services",
     title: "Treatments designed around your skin",
     body: "Pricing depends on your evaluation and the protocol you need. Book a consultation and we will build your plan together.",
-    consult: "Price on consultation",
     book: "Book",
-    resultsTitle: "Real results",
-    resultsBody:
-      "Before & after from our facial protocols. Individual results may vary.",
-    resultsLabels: ["Regular Facial", "Deep Cleansing Facial"],
     groups: [
       {
         id: "facials",
@@ -84,146 +76,56 @@ const en = {
         intro:
           "Cleansing and renewal rituals to keep your skin healthy, balanced and luminous.",
         items: [
-          {
-            name: "Regular Facial",
-            description:
-              "Essential cleansing, exfoliation, extractions, mask, hydration and SPF to keep skin fresh and balanced.",
-            duration: "60 min",
-            tags: ["Acne-prone", "Dull skin"],
-          },
-          {
-            name: "Deep Cleansing Facial",
-            description:
-              "Intensive protocol with enzymatic peel, extractions, high frequency, diamond tip and LED therapy.",
-            duration: "90 min",
-            tags: ["Pores", "Texture"],
-            featured: true,
-          },
-          {
-            name: "Hydrafacial",
-            description:
-              "Cleanse, extract and infuse hydration in one comfortable renewal protocol.",
-            tags: ["Hydration", "Glow"],
-          },
-          {
-            name: "Dermaplaning Facial",
-            description:
-              "Gentle surface renewal for smoother, brighter skin that absorbs actives better.",
-            duration: "60 min",
-            tags: ["Texture", "Glow"],
-          },
-          {
-            name: "Enzymatic Peel Facial",
-            description:
-              "Enzyme exfoliation that renews and evens the skin without aggression.",
-            tags: ["Tone", "Texture"],
-          },
-          {
-            name: "Detox Facial",
-            description:
-              "Purifying ritual to refresh, decongest and restore comfort to the skin.",
-            tags: ["Purify", "Balance"],
-          },
-          {
-            name: "Carboxytherapy Facial",
-            description:
-              "Facial protocol incorporating carboxytherapy to revive tired, dull-looking skin.",
-            tags: ["Dull skin", "Firmness"],
-          },
-          {
-            name: "Microneedling / Dermapen Facial",
-            description:
-              "Controlled micro-stimulation focused on texture, marks and the appearance of scars.",
-            tags: ["Scars", "Pores"],
-          },
-          {
-            name: "PRP Facial",
-            description:
-              "Platelet-rich plasma protocol to support regeneration, subject to evaluation.",
-            tags: ["Renewal", "Texture"],
-          },
-          {
-            name: "Exosome Facial",
-            description:
-              "Advanced exosome protocol to support recovery and skin quality when indicated.",
-            tags: ["Recovery", "Anti-aging"],
-          },
+          { name: "Regular Facial" },
+          { name: "Deep Cleansing Facial" },
+          { name: "Dermaplaning Facial" },
+          { name: "Carboxytherapy Facial" },
+          { name: "Detox Facial" },
+          { name: "Hydrafacial" },
+          { name: "Microneedling / Dermapen Facial" },
         ],
       },
       {
         id: "treatments",
-        title: "Advanced treatments",
+        title: "Treatments",
         intro:
           "Targeted plans and technology for specific skin concerns, always after a professional assessment.",
         items: [
-          {
-            name: "Acne Treatment",
-            description:
-              "Personalized plan to balance oil, decongest pores and help control breakouts and marks.",
-            tags: ["Acne", "Oily skin"],
-            featured: true,
-          },
-          {
-            name: "Anti-Aging Treatment",
-            description:
-              "Actives and technology to soften the look of lines and improve firmness and luminosity.",
-            tags: ["Lines", "Firmness"],
-          },
-          {
-            name: "Pigmentation & Dark Spots",
-            description:
-              "Progressive protocol to even tone and improve the appearance of hyperpigmentation.",
-            tags: ["Spots", "Tone"],
-          },
-          {
-            name: "Scar Treatment",
-            description:
-              "Combined techniques to progressively improve texture and the appearance of scars.",
-            tags: ["Scars", "Texture"],
-          },
-          {
-            name: "Radiofrequency",
-            description:
-              "Controlled thermal technology for firming face and body protocols.",
-            tags: ["Firmness", "Tightening"],
-          },
-          {
-            name: "Chemical Peel",
-            description:
-              "Chemical renewal selected according to your skin, area and goal.",
-            tags: ["Tone", "Texture"],
-          },
-          {
-            name: "Carbon Laser Peel",
-            description:
-              "Carbon and laser protocol for renewal, refined pores and instant glow.",
-            tags: ["Pores", "Glow"],
-          },
-          {
-            name: "Picosecond Laser",
-            description:
-              "Precision laser technology for specific goals, applied after evaluation.",
-            tags: ["Spots", "Scars"],
-          },
-          {
-            name: "BioPen",
-            description:
-              "Controlled stimulation technique for texture, marks and renewal.",
-            tags: ["Texture", "Marks"],
-          },
-          {
-            name: "Mole & Wart Removal",
-            description:
-              "Assessment to determine whether the procedure is suitable and safe for you.",
-            tags: ["Evaluation"],
-          },
+          { name: "Acne Treatment" },
+          { name: "Anti-Aging Treatment" },
+          { name: "Dark Spots Treatment" },
+          { name: "Scar Treatment" },
+          { name: "Multipolar Facial Radiofrequency" },
+          { name: "Fractional Radiofrequency" },
+          { name: "Microneedling / Dermapen" },
+          { name: "Carbon Laser Peel" },
+          { name: "BioPen" },
+          { name: "Chemical Peel" },
+        ],
+      },
+      {
+        id: "body",
+        title: "Body treatments",
+        intro:
+          "Body protocols to firm, contour and renew your skin, always after a professional assessment.",
+        items: [
+          { name: "Body Radiofrequency" },
+          { name: "Body Carboxytherapy" },
+          { name: "Body Contouring" },
+          { name: "Stretch Mark Treatment" },
+          { name: "Body Chemical Peel" },
         ],
       },
     ] as ServiceGroup[],
   },
+  gallery: {
+    eyebrow: "Gallery",
+    title: "Real results",
+    body: "Before & after photos from our protocols. Individual results may vary.",
+    labels: ["Regular Facial", "Deep Cleansing Facial"],
+  },
   about: {
     eyebrow: "About",
-    title: "Meet Arecio Rodríguez",
     role: "Facial & Body Aesthetics Specialist · Florida Certified Full Specialist",
     paragraphs: [
       "With more than 10 years of experience in facial and body aesthetics, Arecio specializes in caring for and transforming the skin through personalized, results-oriented treatments.",
@@ -266,7 +168,7 @@ const en = {
         quote:
           "Clean, calm space and real expertise. You can tell he truly cares about results.",
         author: "Andrea L.",
-        treatment: "Microneedling",
+        treatment: "Microneedling / Dermapen",
       },
     ] as Review[],
   },
@@ -318,6 +220,7 @@ const es: Dictionary = {
   },
   nav: {
     services: "Servicios",
+    gallery: "Galería",
     about: "Sobre mí",
     reviews: "Reseñas",
     visit: "Visítanos",
@@ -358,12 +261,7 @@ const es: Dictionary = {
     eyebrow: "Servicios",
     title: "Tratamientos diseñados para tu piel",
     body: "El precio depende de tu evaluación y del protocolo que necesites. Reserva una consulta y construimos tu plan juntos.",
-    consult: "Precio en consulta",
     book: "Reservar",
-    resultsTitle: "Resultados reales",
-    resultsBody:
-      "Antes y después de nuestros protocolos faciales. Los resultados pueden variar.",
-    resultsLabels: ["Facial Regular", "Facial Profundo"],
     groups: [
       {
         id: "facials",
@@ -371,146 +269,56 @@ const es: Dictionary = {
         intro:
           "Rituales de limpieza y renovación para mantener tu piel sana, equilibrada y luminosa.",
         items: [
-          {
-            name: "Facial Regular",
-            description:
-              "Limpieza esencial, exfoliación, extracciones, mascarilla, hidratación y SPF para una piel fresca y equilibrada.",
-            duration: "60 min",
-            tags: ["Tendencia acneica", "Piel opaca"],
-          },
-          {
-            name: "Facial Profundo",
-            description:
-              "Protocolo intensivo con peeling enzimático, extracciones, alta frecuencia, punta de diamante y LED.",
-            duration: "90 min",
-            tags: ["Poros", "Textura"],
-            featured: true,
-          },
-          {
-            name: "Hidrofacial",
-            description:
-              "Limpieza, extracción e hidratación en un protocolo de renovación confortable.",
-            tags: ["Hidratación", "Luminosidad"],
-          },
-          {
-            name: "Facial con Dermaplaning",
-            description:
-              "Renovación superficial suave para una piel más lisa y luminosa que absorbe mejor los activos.",
-            duration: "60 min",
-            tags: ["Textura", "Luminosidad"],
-          },
-          {
-            name: "Facial con Peeling Enzimático",
-            description:
-              "Exfoliación enzimática que renueva y unifica la piel sin agredirla.",
-            tags: ["Tono", "Textura"],
-          },
-          {
-            name: "Facial Detox",
-            description:
-              "Ritual purificante para refrescar, descongestionar y devolver confort a la piel.",
-            tags: ["Purifica", "Equilibra"],
-          },
-          {
-            name: "Facial con Carboxiterapia",
-            description:
-              "Protocolo facial con carboxiterapia para revitalizar pieles cansadas y apagadas.",
-            tags: ["Piel opaca", "Firmeza"],
-          },
-          {
-            name: "Facial con Microneedling / Dermapen",
-            description:
-              "Micro-estimulación controlada orientada a textura, marcas y apariencia de cicatrices.",
-            tags: ["Cicatrices", "Poros"],
-          },
-          {
-            name: "Facial con Plasma Rico en Plaquetas",
-            description:
-              "Protocolo con PRP para acompañar la regeneración, sujeto a valoración.",
-            tags: ["Renovación", "Textura"],
-          },
-          {
-            name: "Facial con Exosomas",
-            description:
-              "Protocolo avanzado con exosomas para apoyar la recuperación y calidad de la piel cuando está indicado.",
-            tags: ["Recuperación", "Antiedad"],
-          },
+          { name: "Facial Regular" },
+          { name: "Facial Profundo" },
+          { name: "Facial con Dermaplaning" },
+          { name: "Facial con Carboxiterapia" },
+          { name: "Facial Detox" },
+          { name: "Hidrofacial" },
+          { name: "Facial con Microneedling / Dermapen" },
         ],
       },
       {
         id: "treatments",
-        title: "Tratamientos avanzados",
+        title: "Tratamientos",
         intro:
           "Planes y tecnología dirigidos a necesidades específicas, siempre tras una valoración profesional.",
         items: [
-          {
-            name: "Tratamiento para Acné",
-            description:
-              "Plan personalizado para equilibrar la grasa, descongestionar poros y ayudar a controlar brotes y marcas.",
-            tags: ["Acné", "Piel grasa"],
-            featured: true,
-          },
-          {
-            name: "Tratamiento Antiedad",
-            description:
-              "Activos y tecnología para suavizar visualmente líneas y mejorar firmeza y luminosidad.",
-            tags: ["Líneas", "Firmeza"],
-          },
-          {
-            name: "Manchas e Hiperpigmentación",
-            description:
-              "Protocolo progresivo para unificar el tono y mejorar la apariencia de las manchas.",
-            tags: ["Manchas", "Tono"],
-          },
-          {
-            name: "Tratamiento de Cicatrices",
-            description:
-              "Técnicas combinadas para mejorar progresivamente la textura y apariencia de cicatrices.",
-            tags: ["Cicatrices", "Textura"],
-          },
-          {
-            name: "Radiofrecuencia",
-            description:
-              "Tecnología térmica controlada para protocolos de firmeza facial y corporal.",
-            tags: ["Firmeza", "Tensado"],
-          },
-          {
-            name: "Peeling Químico",
-            description:
-              "Renovación química seleccionada según tu piel, la zona y el objetivo.",
-            tags: ["Tono", "Textura"],
-          },
-          {
-            name: "Carbón Láser",
-            description:
-              "Protocolo con carbón y láser para renovar, afinar poros y aportar luminosidad.",
-            tags: ["Poros", "Luminosidad"],
-          },
-          {
-            name: "Láser Picosecond",
-            description:
-              "Tecnología láser de precisión para objetivos específicos, tras valoración.",
-            tags: ["Manchas", "Cicatrices"],
-          },
-          {
-            name: "BioPen",
-            description:
-              "Técnica de estimulación controlada para textura, marcas y renovación.",
-            tags: ["Textura", "Marcas"],
-          },
-          {
-            name: "Eliminación de Verrugas y Lunares",
-            description:
-              "Valoración para determinar si el procedimiento es adecuado y seguro para ti.",
-            tags: ["Valoración"],
-          },
+          { name: "Tratamiento para Acné" },
+          { name: "Tratamiento Antiedad" },
+          { name: "Tratamiento para Manchas" },
+          { name: "Tratamiento para Cicatrices" },
+          { name: "Radiofrecuencia Facial Multipolar" },
+          { name: "Radiofrecuencia Fraccionada" },
+          { name: "Microneedling / Dermapen" },
+          { name: "Carbon Laser Peel" },
+          { name: "BioPen" },
+          { name: "Peeling Químico" },
+        ],
+      },
+      {
+        id: "body",
+        title: "Tratamientos corporales",
+        intro:
+          "Protocolos corporales para reafirmar, modelar y renovar tu piel, siempre tras una valoración profesional.",
+        items: [
+          { name: "Radiofrecuencia Corporal" },
+          { name: "Carboxiterapia Corporal" },
+          { name: "Moldeado Corporal" },
+          { name: "Tratamiento para Estrías" },
+          { name: "Peeling Químico Corporal" },
         ],
       },
     ],
   },
+  gallery: {
+    eyebrow: "Galería",
+    title: "Resultados reales",
+    body: "Fotos de antes y después de nuestros protocolos. Los resultados pueden variar.",
+    labels: ["Facial Regular", "Facial Profundo"],
+  },
   about: {
     eyebrow: "Sobre mí",
-    title: "Conoce a Arecio Rodríguez",
     role: "Especialista en Estética Facial y Corporal · Florida Certified Full Specialist",
     paragraphs: [
       "Con más de 10 años de experiencia en estética facial y corporal, Arecio se especializa en el cuidado y la transformación de la piel mediante tratamientos personalizados y orientados a resultados.",
@@ -553,7 +361,7 @@ const es: Dictionary = {
         quote:
           "Un espacio limpio y tranquilo, y experiencia real. Se nota que de verdad le importan los resultados.",
         author: "Andrea L.",
-        treatment: "Microneedling",
+        treatment: "Microneedling / Dermapen",
       },
     ],
   },
