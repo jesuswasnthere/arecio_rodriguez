@@ -64,12 +64,12 @@ export function Hero() {
               {t.hero.secondary}
             </a>
           </div>
-          <dl className="mt-14 grid max-w-lg grid-cols-3 gap-4 border-t border-clinic/15 pt-8 sm:gap-6">
+          <dl className="mt-14 grid max-w-xl grid-cols-3 gap-3 border-t border-clinic/15 pt-8 sm:gap-6">
             {t.hero.stats.map((stat) => (
               <div key={stat.label}>
                 <dt className="sr-only">{stat.label}</dt>
                 <dd className="font-serif text-4xl text-gold">{stat.value}</dd>
-                <dd className="mt-1 text-[11px] leading-snug tracking-[0.06em] break-words hyphens-auto text-clinic/60 uppercase sm:tracking-[0.12em]">
+                <dd className="mt-1.5 text-xs leading-snug tracking-[0.04em] text-clinic/70 uppercase sm:text-[13px] sm:tracking-[0.1em]">
                   {stat.label}
                 </dd>
               </div>
@@ -112,7 +112,7 @@ export function Highlights() {
       <div className="mx-auto grid max-w-7xl divide-y divide-gold/20 sm:grid-cols-3 sm:divide-x sm:divide-y-0 lg:px-10">
         {t.highlights.map((item, i) => (
           <div key={item.title} className="px-5 py-10 sm:px-8">
-            <span className="font-serif text-sm text-gold">0{i + 1}</span>
+            <span className="font-serif text-3xl text-gold">0{i + 1}</span>
             <h2 className="mt-3 font-serif text-2xl">{item.title}</h2>
             <p className="mt-3 text-sm leading-relaxed text-clinic/70">
               {item.body}
