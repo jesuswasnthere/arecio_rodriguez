@@ -92,10 +92,10 @@ export function Hero() {
             </div>
           </div>
           <div className="mt-6 text-center">
-            <p className="text-[10px] tracking-[0.28em] text-clinic/60 uppercase">
+            <p className="text-[13px] tracking-[0.28em] text-gold uppercase">
               Miami · Florida
             </p>
-            <p className="mt-1 font-serif text-xl text-clinic">
+            <p className="mt-1 font-serif text-[23px] text-gold">
               {site.credential}
             </p>
           </div>
