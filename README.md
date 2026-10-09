@@ -16,14 +16,14 @@ bun run build
 
 ## Dónde editar
 
-| Qué | Archivo |
-| --- | --- |
-| Teléfono, email, Instagram, dirección, enlace de reserva (**Book Now**) | `lib/site.ts` |
-| Todos los textos EN/ES, servicios, reseñas, horario | `lib/i18n.ts` |
-| Secciones (Hero, Services, About, Reviews, Visit Us, Contact, Footer) | `components/sections.tsx` |
-| Header, menú móvil y botón de idioma | `components/site-header.tsx` |
-| Paleta de marca y tipografías | `app/globals.css`, `app/layout.tsx` |
-| Imágenes optimizadas de la web | `public/images/` (originales en `media/`) |
+| Qué                                                                     | Archivo                                   |
+| ----------------------------------------------------------------------- | ----------------------------------------- |
+| Teléfono, email, Instagram, dirección, enlace de reserva (**Book Now**) | `lib/site.ts`                             |
+| Todos los textos EN/ES, servicios, reseñas, horario                     | `lib/i18n.ts`                             |
+| Secciones (Hero, Services, About, Reviews, Visit Us, Contact, Footer)   | `components/sections.tsx`                 |
+| Header, menú móvil y botón de idioma                                    | `components/site-header.tsx`              |
+| Paleta de marca y tipografías                                           | `app/globals.css`, `app/layout.tsx`       |
+| Imágenes optimizadas de la web                                          | `public/images/` (originales en `media/`) |
 
 Paleta (`media/brand`): blanco clínico `#F7F8F8` (60%), navy `#102A3A` (25%), gris acero `#69757D` (10%), dorado `#B79A62` (5%).
 

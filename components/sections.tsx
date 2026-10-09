@@ -84,7 +84,7 @@ export function Hero() {
               src="/images/hero.jpg"
               alt="Arecio Rodríguez realizando un tratamiento facial"
               fill
-              priority
+              preload
               sizes="(max-width: 1024px) 90vw, 40vw"
               className="object-cover object-center"
             />
@@ -697,7 +697,14 @@ export function Footer() {
           <nav aria-label="Footer">
             <ul className="flex flex-wrap gap-x-8 gap-y-3 text-xs tracking-[0.18em] text-clinic/70 uppercase">
               {(
-                ["services", "gallery", "about", "reviews", "visit", "contact"] as const
+                [
+                  "services",
+                  "gallery",
+                  "about",
+                  "reviews",
+                  "visit",
+                  "contact",
+                ] as const
               ).map((key) => (
                 <li key={key}>
                   <a href={`#${key}`} className="hover:text-gold">

@@ -7,7 +7,7 @@ export function Logo({ className = "" }: { className?: string }) {
       alt="Arecio Rodríguez · Advanced Skin Aesthetics"
       width={572}
       height={255}
-      priority
+      preload
       className={`h-12 w-auto sm:h-14 ${className}`}
     />
   )
