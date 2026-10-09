@@ -145,7 +145,7 @@ export function Services() {
         <div
           role="tablist"
           aria-label={t.services.eyebrow}
-          className="mt-12 flex gap-2 overflow-x-auto border-b border-navy/10"
+          className="mt-12 flex flex-wrap gap-2 sm:gap-3"
         >
           {t.services.groups.map((g, i) => (
             <button
@@ -156,10 +156,10 @@ export function Services() {
               aria-selected={active === i}
               aria-controls={`panel-${g.id}`}
               onClick={() => setActive(i)}
-              className={`-mb-px shrink-0 border-b-2 px-4 py-3 text-xs font-medium tracking-[0.2em] uppercase transition-colors ${
+              className={`shrink-0 cursor-pointer border px-3.5 py-3 text-xs font-medium tracking-[0.16em] sm:px-5 sm:tracking-[0.2em] uppercase transition-colors ${
                 active === i
-                  ? "border-gold text-navy"
-                  : "border-transparent text-steel hover:text-navy"
+                  ? "border-navy bg-navy text-white shadow-md shadow-navy/15"
+                  : "border-gold/50 bg-white text-navy hover:border-gold hover:bg-gold-soft/30"
               }`}
             >
               {g.title}
@@ -261,26 +261,17 @@ export function About() {
         <div className="relative grid grid-cols-5 gap-4">
           <div className="relative col-span-3 aspect-[3/4] overflow-hidden bg-clinic">
             <Image
-              src="/images/about.jpg"
+              src="/images/about-coat.jpg"
               alt="Arecio Rodríguez"
               fill
               sizes="(max-width: 1024px) 60vw, 30vw"
               className="object-cover object-top"
             />
           </div>
-          <div className="col-span-2 flex flex-col gap-4 pt-12">
-            <div className="relative aspect-[3/4] overflow-hidden bg-clinic">
+          <div className="col-span-2 pt-12">
+            <div className="relative aspect-[9/16] overflow-hidden bg-clinic">
               <Image
-                src="/images/treatment-steam.jpg"
-                alt=""
-                fill
-                sizes="(max-width: 1024px) 40vw, 20vw"
-                className="object-cover"
-              />
-            </div>
-            <div className="relative aspect-square overflow-hidden bg-clinic">
-              <Image
-                src="/images/studio-3.jpg"
+                src="/images/about-portrait.jpg"
                 alt=""
                 fill
                 sizes="(max-width: 1024px) 40vw, 20vw"
