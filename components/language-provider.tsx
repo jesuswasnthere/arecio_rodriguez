@@ -47,10 +47,12 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const lang = useSyncExternalStore(subscribe, readLang, () => "en" as Lang)
 
   const setLang = useCallback((next: Lang) => {
-    memoryLang = next
     try {
       window.localStorage.setItem(STORAGE_KEY, next)
-    } catch {}
+      memoryLang = null
+    } catch {
+      memoryLang = next
+    }
     window.dispatchEvent(new Event(EVENT))
   }, [])
 

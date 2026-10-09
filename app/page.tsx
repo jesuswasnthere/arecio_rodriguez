@@ -43,7 +43,7 @@ export default function Home() {
         }}
       />
       <SiteHeader />
-      <main className="pb-14 sm:pb-0">
+      <main>
         <Hero />
         <Highlights />
         <Services />

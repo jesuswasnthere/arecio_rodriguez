@@ -21,7 +21,18 @@ export function SiteHeader() {
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : ""
+    return () => {
+      document.body.style.overflow = ""
+    }
   }, [open])
+
+  // El menú móvil se oculta en escritorio (lg); ciérralo para no dejar el scroll bloqueado.
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1024px)")
+    const onChange = () => mq.matches && setOpen(false)
+    mq.addEventListener("change", onChange)
+    return () => mq.removeEventListener("change", onChange)
+  }, [])
 
   const links = [
     { href: "#services", label: t.nav.services },

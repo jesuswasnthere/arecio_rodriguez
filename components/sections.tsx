@@ -64,12 +64,12 @@ export function Hero() {
               {t.hero.secondary}
             </a>
           </div>
-          <dl className="mt-14 grid max-w-lg grid-cols-3 gap-6 border-t border-clinic/15 pt-8">
+          <dl className="mt-14 grid max-w-lg grid-cols-3 gap-4 border-t border-clinic/15 pt-8 sm:gap-6">
             {t.hero.stats.map((stat) => (
               <div key={stat.label}>
                 <dt className="sr-only">{stat.label}</dt>
                 <dd className="font-serif text-4xl text-gold">{stat.value}</dd>
-                <dd className="mt-1 text-[11px] leading-snug tracking-[0.12em] text-clinic/60 uppercase">
+                <dd className="mt-1 text-[11px] leading-snug tracking-[0.06em] break-words hyphens-auto text-clinic/60 uppercase sm:tracking-[0.12em]">
                   {stat.label}
                 </dd>
               </div>
@@ -84,7 +84,7 @@ export function Hero() {
               src="/images/hero.jpg"
               alt="Arecio Rodríguez realizando un tratamiento facial"
               fill
-              priority
+              preload
               sizes="(max-width: 1024px) 90vw, 40vw"
               className="object-cover object-center"
             />
@@ -186,7 +186,7 @@ export function Services() {
                 </h3>
                 <a
                   {...bookProps}
-                  className="inline-flex shrink-0 items-center gap-1 text-xs font-medium tracking-[0.16em] text-gold uppercase"
+                  className="-my-3 inline-flex shrink-0 items-center gap-1 py-3 text-xs font-medium tracking-[0.16em] text-gold uppercase"
                   aria-label={`${t.services.book}: ${service.name}`}
                 >
                   {t.services.book}
@@ -381,8 +381,12 @@ export function Reviews() {
                 aria-label={`${i + 1} / ${items.length}`}
                 aria-current={i === index}
                 onClick={() => setIndex(i)}
-                className={`h-1.5 transition-all ${i === index ? "w-8 bg-gold" : "w-4 bg-clinic/25"}`}
-              />
+                className="-mx-1 -my-2 px-1 py-2"
+              >
+                <span
+                  className={`block h-1.5 transition-all ${i === index ? "w-8 bg-gold" : "w-4 bg-clinic/25"}`}
+                />
+              </button>
             ))}
           </div>
         </div>
@@ -548,7 +552,7 @@ export function Contact() {
   }
 
   const field =
-    "w-full border border-navy/15 bg-white px-4 text-sm tracking-normal normal-case text-navy outline-none transition-colors placeholder:text-steel/60 focus:border-gold"
+    "w-full border border-navy/15 bg-white px-4 text-base tracking-normal normal-case text-navy outline-none transition-colors placeholder:text-steel/60 focus:border-gold sm:text-sm"
 
   return (
     <section id="contact" className="bg-white py-20 sm:py-28">
@@ -697,7 +701,14 @@ export function Footer() {
           <nav aria-label="Footer">
             <ul className="flex flex-wrap gap-x-8 gap-y-3 text-xs tracking-[0.18em] text-clinic/70 uppercase">
               {(
-                ["services", "gallery", "about", "reviews", "visit", "contact"] as const
+                [
+                  "services",
+                  "gallery",
+                  "about",
+                  "reviews",
+                  "visit",
+                  "contact",
+                ] as const
               ).map((key) => (
                 <li key={key}>
                   <a href={`#${key}`} className="hover:text-gold">
