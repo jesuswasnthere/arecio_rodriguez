@@ -258,7 +258,7 @@ const es: Dictionary = {
   services: {
     eyebrow: "Servicios",
     title: "Tratamientos diseñados para tu piel",
-    body: "El precio depende de tu evaluación y del protocolo que necesites. Reserva una consulta y construimos tu plan juntos.",
+    body: "Tu piel es única, tu tratamiento también.\n\nOfrecemos una evaluación de la piel completamente GRATIS, donde analizamos sus características, necesidades y objetivos para recomendarte el tratamiento facial más adecuado.\n\nNuestro compromiso es brindarte una atención personalizada, con protocolos diseñados especialmente para ti.",
     book: "Reservar",
     groups: [
       {
