@@ -78,16 +78,18 @@ export function Hero() {
         </div>
 
         <div className="relative mx-auto w-full max-w-md lg:max-w-none">
-          <div className="absolute -top-4 -right-4 hidden h-full w-full border border-gold/40 sm:block" />
-          <div className="relative aspect-[4/5] overflow-hidden bg-navy-deep">
-            <Image
-              src="/images/hero.jpg"
-              alt="Arecio Rodríguez realizando un tratamiento facial"
-              fill
-              preload
-              sizes="(max-width: 1024px) 90vw, 40vw"
-              className="object-cover object-center"
-            />
+          <div className="relative">
+            <div className="absolute -top-4 -right-4 hidden h-full w-full border border-gold/40 sm:block" />
+            <div className="relative aspect-[4/5] overflow-hidden bg-navy-deep">
+              <Image
+                src="/images/hero.jpg"
+                alt="Arecio Rodríguez realizando un tratamiento facial"
+                fill
+                preload
+                sizes="(max-width: 1024px) 90vw, 40vw"
+                className="object-cover object-center"
+              />
+            </div>
           </div>
           <div className="mt-6 text-center">
             <p className="text-[10px] tracking-[0.28em] text-clinic/60 uppercase">
