@@ -36,8 +36,8 @@ export function SiteHeader() {
 
   const links = [
     { href: "#services", label: t.nav.services },
-    { href: "#gallery", label: t.nav.gallery },
     { href: "#about", label: t.nav.about },
+    { href: "#gallery", label: t.nav.gallery },
     { href: "#reviews", label: t.nav.reviews },
     { href: "#visit", label: t.nav.visit },
     { href: "#contact", label: t.nav.contact },

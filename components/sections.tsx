@@ -213,7 +213,7 @@ export function Gallery() {
   const images = ["/images/result-regular.jpg", "/images/result-deep.jpg"]
 
   return (
-    <section id="gallery" className="scroll-mt-10 bg-ivory pb-20 sm:pb-28">
+    <section id="gallery" className="scroll-mt-10 bg-ivory py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-5 lg:px-10">
         <div className="grid gap-10 bg-navy p-6 text-clinic sm:p-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-center lg:p-14">
           <div>
@@ -698,8 +698,8 @@ export function Footer() {
               {(
                 [
                   "services",
-                  "gallery",
                   "about",
+                  "gallery",
                   "reviews",
                   "visit",
                   "contact",
