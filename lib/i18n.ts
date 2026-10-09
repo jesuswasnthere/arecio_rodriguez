@@ -105,7 +105,7 @@ const en = {
       },
       {
         id: "body",
-        title: "Body treatments",
+        title: "Body",
         intro:
           "Body protocols to firm, contour and renew your skin, always after a professional assessment.",
         items: [
@@ -298,7 +298,7 @@ const es: Dictionary = {
       },
       {
         id: "body",
-        title: "Tratamientos corporales",
+        title: "Corporal",
         intro:
           "Protocolos corporales para reafirmar, modelar y renovar tu piel, siempre tras una valoración profesional.",
         items: [
