@@ -1,3 +1,7 @@
+# Contexto del proyecto
+
+Lee `knowledge.md` (raíz del repo) antes de explorar el código: resume el negocio, el stack, la estructura, la identidad visual, el contenido actual y las mejoras pendientes. Si cambias algo estructural (rutas, tokens de marca, datos, convenciones), actualiza `knowledge.md` en el mismo commit.
+
 <!-- BEGIN:nextjs-agent-rules -->
 
 # This is NOT the Next.js you know
