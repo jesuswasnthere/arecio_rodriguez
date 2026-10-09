@@ -89,12 +89,6 @@ export function Hero() {
               className="object-cover object-center"
             />
           </div>
-          <div className="absolute -bottom-6 left-4 bg-clinic px-5 py-4 text-navy shadow-xl sm:-left-8">
-            <p className="text-[10px] tracking-[0.28em] text-steel uppercase">
-              Miami · Florida
-            </p>
-            <p className="mt-1 font-serif text-xl">{site.credential}</p>
-          </div>
         </div>
       </div>
     </section>
