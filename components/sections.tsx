@@ -78,16 +78,18 @@ export function Hero() {
         </div>
 
         <div className="relative mx-auto w-full max-w-md lg:max-w-none">
-          <div className="absolute -top-4 -right-4 hidden h-full w-full border border-gold/40 sm:block" />
-          <div className="relative aspect-[4/5] overflow-hidden bg-navy-deep">
-            <Image
-              src="/images/hero.jpg"
-              alt="Arecio Rodríguez realizando un tratamiento facial"
-              fill
-              preload
-              sizes="(max-width: 1024px) 90vw, 40vw"
-              className="object-cover object-center"
-            />
+          <div className="relative">
+            <div className="absolute -top-4 -right-4 hidden h-full w-full border border-gold/40 sm:block" />
+            <div className="relative aspect-[4/5] overflow-hidden bg-navy-deep">
+              <Image
+                src="/images/hero.jpg"
+                alt="Arecio Rodríguez realizando un tratamiento facial"
+                fill
+                preload
+                sizes="(max-width: 1024px) 90vw, 40vw"
+                className="object-cover object-center"
+              />
+            </div>
           </div>
           <div className="mt-6 text-center">
             <p className="text-[10px] tracking-[0.28em] text-clinic/60 uppercase">
@@ -106,13 +108,13 @@ export function Hero() {
 export function Highlights() {
   const { t } = useLanguage()
   return (
-    <section className="border-b border-navy/10 bg-clinic">
-      <div className="mx-auto grid max-w-7xl divide-y divide-navy/10 sm:grid-cols-3 sm:divide-x sm:divide-y-0 lg:px-10">
+    <section className="border-b border-gold/25 bg-sand">
+      <div className="mx-auto grid max-w-7xl divide-y divide-gold/25 sm:grid-cols-3 sm:divide-x sm:divide-y-0 lg:px-10">
         {t.highlights.map((item, i) => (
           <div key={item.title} className="px-5 py-10 sm:px-8">
             <span className="font-serif text-sm text-gold">0{i + 1}</span>
             <h2 className="mt-3 font-serif text-2xl">{item.title}</h2>
-            <p className="mt-3 text-sm leading-relaxed text-steel">
+            <p className="mt-3 text-sm leading-relaxed text-navy/75">
               {item.body}
             </p>
           </div>
@@ -130,7 +132,7 @@ export function Services() {
   const group = t.services.groups[active]
 
   return (
-    <section id="services" className="bg-clinic py-20 sm:py-28">
+    <section id="services" className="bg-ivory py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-5 lg:px-10">
         <div className="grid gap-8 lg:grid-cols-[1fr_1fr] lg:items-end">
           <div>
@@ -139,7 +141,7 @@ export function Services() {
               {t.services.title}
             </h2>
           </div>
-          <p className="max-w-lg text-base leading-relaxed text-steel lg:justify-self-end">
+          <p className="max-w-lg text-base leading-relaxed text-navy/75 lg:justify-self-end">
             {t.services.body}
           </p>
         </div>
@@ -174,7 +176,7 @@ export function Services() {
           role="tabpanel"
           aria-labelledby={`tab-${group.id}`}
         >
-          <p className="mt-8 max-w-2xl text-sm leading-relaxed text-steel">
+          <p className="mt-8 max-w-2xl text-sm leading-relaxed text-navy/75">
             {group.intro}
           </p>
           <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -211,7 +213,7 @@ export function Gallery() {
   const images = ["/images/result-regular.jpg", "/images/result-deep.jpg"]
 
   return (
-    <section id="gallery" className="scroll-mt-10 bg-clinic pb-20 sm:pb-28">
+    <section id="gallery" className="scroll-mt-10 bg-ivory pb-20 sm:pb-28">
       <div className="mx-auto max-w-7xl px-5 lg:px-10">
         <div className="grid gap-10 bg-navy p-6 text-clinic sm:p-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-center lg:p-14">
           <div>
