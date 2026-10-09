@@ -47,8 +47,8 @@ export default function Home() {
         <Hero />
         <Highlights />
         <Services />
-        <Gallery />
         <About />
+        <Gallery />
         <Reviews />
         <Visit />
         <Contact />
