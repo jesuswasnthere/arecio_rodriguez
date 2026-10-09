@@ -69,7 +69,7 @@ export function Hero() {
               <div key={stat.label}>
                 <dt className="sr-only">{stat.label}</dt>
                 <dd className="font-serif text-4xl text-gold">{stat.value}</dd>
-                <dd className="mt-1.5 text-xs leading-snug tracking-[0.04em] text-clinic/70 uppercase sm:text-[13px] sm:tracking-[0.1em]">
+                <dd className="mt-1.5 text-xs leading-snug whitespace-pre-line tracking-[0.04em] text-clinic/70 uppercase sm:text-[13px] sm:tracking-[0.1em]">
                   {stat.label}
                 </dd>
               </div>

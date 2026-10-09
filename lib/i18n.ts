@@ -237,7 +237,7 @@ const es: Dictionary = {
     secondary: "Ver servicios",
     stats: [
       { value: "10+", label: "Años de experiencia" },
-      { value: "20+", label: "Tratamientos y protocolos" },
+      { value: "20+", label: "Tratamientos\ny protocolos" },
       { value: "1:1", label: "Atención personalizada" },
     ],
   },
