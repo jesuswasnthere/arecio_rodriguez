@@ -2,6 +2,7 @@ import {
   About,
   Contact,
   Footer,
+  Gallery,
   Hero,
   Highlights,
   MobileBookBar,
@@ -46,6 +47,7 @@ export default function Home() {
         <Hero />
         <Highlights />
         <Services />
+        <Gallery />
         <About />
         <Reviews />
         <Visit />

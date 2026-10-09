@@ -11,7 +11,6 @@ import {
   MessageCircle,
   Phone,
   Quote,
-  Sparkles,
   Star,
 } from "lucide-react"
 import Image from "next/image"
@@ -174,131 +173,78 @@ export function Services() {
           <p className="mt-8 max-w-2xl text-sm leading-relaxed text-steel">
             {group.intro}
           </p>
-          <ul className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {group.items.map((service) => (
               <li
                 key={service.name}
-                className={`group flex flex-col border p-7 transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-navy/5 ${
-                  service.featured
-                    ? "border-navy bg-navy text-clinic"
-                    : "border-navy/10 bg-white"
-                }`}
+                className="group flex items-center justify-between gap-4 border border-navy/10 bg-white p-6 transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-navy/5"
               >
-                <div className="flex items-start justify-between gap-4">
-                  <h3 className="font-serif text-2xl leading-snug">
-                    {service.name}
-                  </h3>
-                  {service.featured && (
-                    <Sparkles
-                      size={18}
-                      className="mt-1 shrink-0 text-gold"
-                      aria-hidden
-                    />
-                  )}
-                </div>
-                <p
-                  className={`mt-3 flex-1 text-sm leading-relaxed ${
-                    service.featured ? "text-clinic/70" : "text-steel"
-                  }`}
+                <h3 className="font-serif text-xl leading-snug">
+                  {service.name}
+                </h3>
+                <a
+                  {...bookProps}
+                  className="inline-flex shrink-0 items-center gap-1 text-xs font-medium tracking-[0.16em] text-gold uppercase"
+                  aria-label={`${t.services.book}: ${service.name}`}
                 >
-                  {service.description}
-                </p>
-                <ul className="mt-5 flex flex-wrap gap-2">
-                  {service.tags.map((tag) => (
-                    <li
-                      key={tag}
-                      className={`px-2.5 py-1 text-[10px] tracking-[0.14em] uppercase ${
-                        service.featured
-                          ? "bg-clinic/10 text-gold-soft"
-                          : "bg-clinic text-steel"
-                      }`}
-                    >
-                      {tag}
-                    </li>
-                  ))}
-                </ul>
-                <div
-                  className={`mt-6 flex items-center justify-between border-t pt-5 text-xs ${
-                    service.featured ? "border-clinic/15" : "border-navy/10"
-                  }`}
-                >
-                  <span className="flex items-center gap-2 tracking-[0.08em]">
-                    {service.duration && (
-                      <>
-                        <Clock size={14} className="text-gold" aria-hidden />
-                        {service.duration}
-                        <span className="opacity-40">·</span>
-                      </>
-                    )}
-                    <span
-                      className={
-                        service.featured ? "text-clinic/60" : "text-steel"
-                      }
-                    >
-                      {t.services.consult}
-                    </span>
-                  </span>
-                  <a
-                    {...bookProps}
-                    className="inline-flex items-center gap-1 font-medium tracking-[0.16em] text-gold uppercase"
-                    aria-label={`${t.services.book}: ${service.name}`}
-                  >
-                    {t.services.book}
-                    <ArrowRight
-                      size={14}
-                      className="transition-transform group-hover:translate-x-1"
-                    />
-                  </a>
-                </div>
+                  {t.services.book}
+                  <ArrowRight
+                    size={14}
+                    className="transition-transform group-hover:translate-x-1"
+                  />
+                </a>
               </li>
             ))}
           </ul>
         </div>
-
-        <Results />
       </div>
     </section>
   )
 }
 
-function Results() {
+export function Gallery() {
   const { t } = useLanguage()
   const images = ["/images/result-regular.jpg", "/images/result-deep.jpg"]
 
   return (
-    <div className="mt-20 grid gap-10 bg-navy p-6 text-clinic sm:p-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-center lg:p-14">
-      <div>
-        <Eyebrow light>{t.services.resultsTitle}</Eyebrow>
-        <p className="mt-5 font-serif text-3xl leading-snug sm:text-4xl">
-          {t.services.resultsBody}
-        </p>
-        <a
-          {...bookProps}
-          className="mt-8 inline-flex h-12 items-center gap-2 bg-gold px-6 text-xs font-medium tracking-[0.2em] text-navy uppercase transition-colors hover:bg-gold-soft"
-        >
-          {t.nav.book}
-          <ArrowUpRight size={16} />
-        </a>
+    <section id="gallery" className="bg-clinic pb-20 sm:pb-28">
+      <div className="mx-auto max-w-7xl px-5 lg:px-10">
+        <div className="grid gap-10 bg-navy p-6 text-clinic sm:p-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-center lg:p-14">
+          <div>
+            <Eyebrow light>{t.gallery.eyebrow}</Eyebrow>
+            <h2 className="mt-5 font-serif text-3xl leading-snug sm:text-4xl">
+              {t.gallery.title}
+            </h2>
+            <p className="mt-4 text-clinic/70">{t.gallery.body}</p>
+            <a
+              {...bookProps}
+              className="mt-8 inline-flex h-12 items-center gap-2 bg-gold px-6 text-xs font-medium tracking-[0.2em] text-navy uppercase transition-colors hover:bg-gold-soft"
+            >
+              {t.nav.book}
+              <ArrowUpRight size={16} />
+            </a>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            {images.map((src, i) => (
+              <figure key={src}>
+                <div className="relative aspect-[3/4] overflow-hidden bg-navy-deep">
+                  <Image
+                    src={src}
+                    alt={t.gallery.labels[i]}
+                    fill
+                    sizes="(max-width: 1024px) 45vw, 25vw"
+                    className="object-cover"
+                  />
+                </div>
+                <figcaption className="mt-3 text-[11px] tracking-[0.18em] text-clinic/70 uppercase">
+                  {t.gallery.labels[i]}
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
       </div>
-      <div className="grid grid-cols-2 gap-4">
-        {images.map((src, i) => (
-          <figure key={src}>
-            <div className="relative aspect-[3/4] overflow-hidden bg-navy-deep">
-              <Image
-                src={src}
-                alt={t.services.resultsLabels[i]}
-                fill
-                sizes="(max-width: 1024px) 45vw, 25vw"
-                className="object-cover"
-              />
-            </div>
-            <figcaption className="mt-3 text-[11px] tracking-[0.18em] text-clinic/70 uppercase">
-              {t.services.resultsLabels[i]}
-            </figcaption>
-          </figure>
-        ))}
-      </div>
-    </div>
+    </section>
   )
 }
 
@@ -344,10 +290,8 @@ export function About() {
 
         <div>
           <Eyebrow>{t.about.eyebrow}</Eyebrow>
-          <h2 className="mt-5 font-serif text-4xl leading-tight font-medium sm:text-5xl">
-            {t.about.title}
-          </h2>
-          <p className="mt-4 text-xs leading-relaxed tracking-[0.16em] text-steel uppercase">
+          <h2 className="sr-only">{t.about.eyebrow}</h2>
+          <p className="mt-6 text-xs leading-relaxed tracking-[0.16em] text-steel uppercase">
             {t.about.role}
           </p>
           <GoldRule className="mt-7" />
@@ -750,7 +694,7 @@ export function Footer() {
           <nav aria-label="Footer">
             <ul className="flex flex-wrap gap-x-8 gap-y-3 text-xs tracking-[0.18em] text-clinic/70 uppercase">
               {(
-                ["services", "about", "reviews", "visit", "contact"] as const
+                ["services", "gallery", "about", "reviews", "visit", "contact"] as const
               ).map((key) => (
                 <li key={key}>
                   <a href={`#${key}`} className="hover:text-gold">
