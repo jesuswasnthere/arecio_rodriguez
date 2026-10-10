@@ -1,6 +1,6 @@
 # Contexto del proyecto
 
-Lee `knowledge.md` (raíz del repo) antes de explorar el código: resume el negocio, el stack, la estructura, la identidad visual, el contenido actual y las mejoras pendientes. Si cambias algo estructural (rutas, tokens de marca, datos, convenciones), actualiza `knowledge.md` en el mismo commit.
+Lee `context.md` (raíz del repo) antes de explorar el código: es el contexto **específico de este repo** (negocio, stack, estructura, identidad visual, contenido y pendientes). El resumen general de todos los repos está fuera, en `/github/knowledge.md`. Si cambias algo estructural (rutas, tokens de marca, datos, convenciones), actualiza `context.md` en el mismo commit.
 
 <!-- BEGIN:nextjs-agent-rules -->
 
