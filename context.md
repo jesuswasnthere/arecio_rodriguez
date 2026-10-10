@@ -82,6 +82,7 @@ Estilo: esquinas rectas, etiquetas en mayúsculas con mucho tracking (`Eyebrow`)
 - **Servicios:** pestañas Facials / Treatments / Body; solo nombres (sin precios ni duraciones), cada uno con botón "Book".
 - **Galería antes/después:** `lib/gallery.ts` lee `public/images/antes-despues/` en build (`.jpg/.jpeg/.png/.webp/.avif`, sin HEIC), ordena por nombre (`01-`, `02-`…). Pie de foto en `i18n.gallery.photos[<nombre sin extensión>]`; si falta, se genera desde el nombre (`03-acne` → "Acne"). Carrusel con flechas cuando hay >2 fotos y visor a pantalla completa (`<dialog>`: flechas, teclado, Esc, clic fuera). Añadir fotos = copiar archivos + commit.
   - Las fotos son collages reales **autorizados** por las clientas; no añadir fotos sin autorización.
+  - Formato: una sola imagen vertical, ANTES arriba y DESPUÉS abajo con franja blanca fina, sin texto ni etiquetas, JPG ~80 sin EXIF. Si llegan flyers de Instagram, se recortan solo las fotos y se recomponen así. Hay 13 (01–13).
 - **Reseñas:** carrusel en móvil, grilla de 4 en escritorio. ⚠️ Son **de ejemplo** (TODO en `lib/i18n.ts`).
 - **Visit:** dirección, horario (por confirmar), mapa embebido de Google.
 - **Contacto:** el formulario no envía email: arma un mensaje y abre WhatsApp.
@@ -111,3 +112,4 @@ Estilo: esquinas rectas, etiquetas en mayúsculas con mucho tracking (`Eyebrow`)
 | 2026-10-09 | Galería movida después de "Sobre mí".                                                                                         |
 | 2026-10-10 | Galería antes/después automática desde `public/images/antes-despues/`, con carrusel y visor.                                  |
 | 2026-10-10 | `knowledge.md` del repo pasa a `context.md` (específico del repo); el `knowledge.md` general vive en `/github`.               |
+| 2026-10-10 | Galería: 11 fotos nuevas recortadas de los flyers (sin texto), una por tratamiento.                                           |

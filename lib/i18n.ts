@@ -128,6 +128,17 @@ const en = {
     photos: {
       "01-facial-regular": "Regular Facial",
       "02-limpieza-profunda": "Deep Cleansing Facial",
+      "03-acido-tranexamico": "Tranexamic Acid for Dark Spots",
+      "04-acne": "Acne Treatment",
+      "05-acne-inflamatorio": "Inflammatory Acne Treatment",
+      "06-cicatrices-acne": "Acne Scar Treatment",
+      "07-hiperpigmentacion": "Hyperpigmentation Treatment",
+      "08-textura-poros": "Skin Texture & Pore Treatment",
+      "09-rosacea": "Rosacea & Sensitive Skin Treatment",
+      "10-antiedad": "Anti-Aging Treatment with PRP & Peptides",
+      "11-pdrn-exosomas": "Salmon PDRN + Exosomes with Microneedling",
+      "12-limpieza-facial": "Deep Cleansing Facial",
+      "13-limpieza-hidratacion": "Facial + Microdermabrasion + Deep Hydration",
     } as Record<string, string>,
   },
   about: {
@@ -326,6 +337,18 @@ const es: Dictionary = {
     photos: {
       "01-facial-regular": "Facial Regular",
       "02-limpieza-profunda": "Facial Profundo",
+      "03-acido-tranexamico": "Ácido Tranexámico para Manchas",
+      "04-acne": "Tratamiento para Acné",
+      "05-acne-inflamatorio": "Tratamiento para Acné Inflamatorio",
+      "06-cicatrices-acne": "Tratamiento para Cicatrices de Acné",
+      "07-hiperpigmentacion": "Tratamiento para Hiperpigmentación",
+      "08-textura-poros": "Tratamiento para Textura y Poros",
+      "09-rosacea": "Tratamiento para Rosácea y Piel Sensible",
+      "10-antiedad": "Tratamiento Antiedad con PRP y Péptidos",
+      "11-pdrn-exosomas": "PDRN de Salmón + Exosomas con Microneedling",
+      "12-limpieza-facial": "Facial Profundo",
+      "13-limpieza-hidratacion":
+        "Limpieza Facial + Microdermoabrasión + Hidratación Profunda",
     },
   },
   about: {
