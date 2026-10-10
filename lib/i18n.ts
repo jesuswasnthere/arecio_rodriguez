@@ -120,7 +120,15 @@ const en = {
     eyebrow: "Gallery",
     title: "Real results",
     body: "Before & after photos from our protocols. Individual results may vary.",
-    labels: ["Regular Facial", "Deep Cleansing Facial"],
+    view: "View photo",
+    close: "Close",
+    prev: "Previous photo",
+    next: "Next photo",
+    // Pie de cada foto, por nombre de archivo (sin extensión).
+    photos: {
+      "01-facial-regular": "Regular Facial",
+      "02-limpieza-profunda": "Deep Cleansing Facial",
+    } as Record<string, string>,
   },
   about: {
     eyebrow: "About",
@@ -311,7 +319,14 @@ const es: Dictionary = {
     eyebrow: "Galería",
     title: "Resultados reales",
     body: "Fotos de antes y después de nuestros protocolos. Los resultados pueden variar.",
-    labels: ["Facial Regular", "Facial Profundo"],
+    view: "Ver foto",
+    close: "Cerrar",
+    prev: "Foto anterior",
+    next: "Foto siguiente",
+    photos: {
+      "01-facial-regular": "Facial Regular",
+      "02-limpieza-profunda": "Facial Profundo",
+    },
   },
   about: {
     eyebrow: "Sobre mí",

@@ -11,6 +11,7 @@ import {
   Visit,
 } from "@/components/sections"
 import { SiteHeader } from "@/components/site-header"
+import { getGalleryPhotos } from "@/lib/gallery"
 import { site } from "@/lib/site"
 
 const jsonLd = {
@@ -48,7 +49,7 @@ export default function Home() {
         <Highlights />
         <Services />
         <About />
-        <Gallery />
+        <Gallery photos={getGalleryPhotos()} />
         <Reviews />
         <Visit />
         <Contact />

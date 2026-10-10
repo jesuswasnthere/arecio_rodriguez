@@ -24,6 +24,14 @@ bun run build
 | Header, menú móvil y botón de idioma                                    | `components/site-header.tsx`              |
 | Paleta de marca y tipografías                                           | `app/globals.css`, `app/layout.tsx`       |
 | Imágenes optimizadas de la web                                          | `public/images/` (originales en `media/`) |
+| Fotos de antes y después (galería)                                      | `public/images/antes-despues/`            |
+
+## Añadir fotos de antes y después
+
+1. Copia las fotos en `public/images/antes-despues/` (`.jpg`, `.jpeg`, `.png`, `.webp` o `.avif`; las `.HEIC` del iPhone hay que exportarlas antes a JPG).
+2. Ponles nombre con número y tratamiento, p. ej. `03-acne.jpg`, `04-manchas.jpg`: se ordenan por nombre.
+3. Opcional: añade el pie EN/ES en `lib/i18n.ts` → `gallery.photos` (clave = nombre sin extensión). Si no, se usa el nombre del archivo (`03-acne` → "Acne").
+4. Commit y push: la galería las muestra sola (carrusel + visor a pantalla completa); no hace falta tocar código.
 
 Paleta (`media/brand`): blanco clínico `#F7F8F8` (60%), navy `#102A3A` (25%), gris acero `#69757D` (10%), dorado `#B79A62` (5%).
 

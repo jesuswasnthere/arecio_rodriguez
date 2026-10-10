@@ -12,12 +12,14 @@ import {
   Phone,
   Quote,
   Star,
+  X,
 } from "lucide-react"
 import Image from "next/image"
-import { useState } from "react"
+import { useRef, useState } from "react"
 
 import { useLanguage } from "@/components/language-provider"
 import { Eyebrow, GoldRule, Logo } from "@/components/logo"
+import type { GalleryPhoto } from "@/lib/gallery"
 import { mapsEmbed, mapsLink, site, whatsappLink } from "@/lib/site"
 
 const bookProps = {
@@ -69,7 +71,7 @@ export function Hero() {
               <div key={stat.label}>
                 <dt className="sr-only">{stat.label}</dt>
                 <dd className="font-serif text-4xl text-gold">{stat.value}</dd>
-                <dd className="mt-1.5 text-xs leading-snug whitespace-pre-line tracking-[0.04em] text-clinic/70 uppercase sm:text-[13px] sm:tracking-[0.1em]">
+                <dd className="mt-1.5 text-xs leading-snug tracking-[0.04em] whitespace-pre-line text-clinic/70 uppercase sm:text-[13px] sm:tracking-[0.1em]">
                   {stat.label}
                 </dd>
               </div>
@@ -160,7 +162,7 @@ export function Services() {
               aria-selected={active === i}
               aria-controls={`panel-${g.id}`}
               onClick={() => setActive(i)}
-              className={`shrink-0 cursor-pointer border px-3.5 py-3 text-xs font-medium tracking-[0.16em] sm:px-5 sm:tracking-[0.2em] uppercase transition-colors ${
+              className={`shrink-0 cursor-pointer border px-3.5 py-3 text-xs font-medium tracking-[0.16em] uppercase transition-colors sm:px-5 sm:tracking-[0.2em] ${
                 active === i
                   ? "border-navy bg-navy text-white shadow-md shadow-navy/15"
                   : "border-gold/50 bg-white text-navy hover:border-gold hover:bg-gold-soft/30"
@@ -208,9 +210,35 @@ export function Services() {
   )
 }
 
-export function Gallery() {
+export function Gallery({ photos }: { photos: GalleryPhoto[] }) {
   const { t } = useLanguage()
-  const images = ["/images/result-regular.jpg", "/images/result-deep.jpg"]
+  const track = useRef<HTMLUListElement>(null)
+  const dialog = useRef<HTMLDialogElement>(null)
+  const [open, setOpen] = useState<number | null>(null)
+  const label = (photo: GalleryPhoto) =>
+    t.gallery.photos[photo.key] ?? labelFromKey(photo.key)
+
+  const scroll = (dir: number) => {
+    const el = track.current
+    if (!el) return
+    const max = el.scrollWidth - el.clientWidth
+    // En los extremos vuelve al otro lado para que las flechas nunca "mueran".
+    if (dir > 0 && el.scrollLeft >= max - 4)
+      el.scrollTo({ left: 0, behavior: "smooth" })
+    else if (dir < 0 && el.scrollLeft <= 4)
+      el.scrollTo({ left: max, behavior: "smooth" })
+    else el.scrollBy({ left: dir * el.clientWidth, behavior: "smooth" })
+  }
+
+  const show = (i: number) => {
+    setOpen(i)
+    if (!dialog.current?.open) dialog.current?.showModal()
+  }
+  const step = (dir: number) =>
+    setOpen((i) => (i === null ? i : (i + dir + photos.length) % photos.length))
+
+  if (photos.length === 0) return null
+  const current = open === null ? null : photos[open]
 
   return (
     <section id="gallery" className="scroll-mt-10 bg-ivory py-20 sm:py-28">
@@ -222,36 +250,143 @@ export function Gallery() {
               {t.gallery.title}
             </h2>
             <p className="mt-4 text-clinic/70">{t.gallery.body}</p>
-            <a
-              {...bookProps}
-              className="mt-8 inline-flex h-12 items-center gap-2 bg-gold px-6 text-xs font-medium tracking-[0.2em] text-navy uppercase transition-colors hover:bg-gold-soft"
-            >
-              {t.nav.book}
-              <ArrowUpRight size={16} />
-            </a>
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            {images.map((src, i) => (
-              <figure key={src}>
-                <div className="relative aspect-[3/4] overflow-hidden bg-navy-deep">
-                  <Image
-                    src={src}
-                    alt={t.gallery.labels[i]}
-                    fill
-                    sizes="(max-width: 1024px) 45vw, 25vw"
-                    className="object-cover"
-                  />
+            <div className="mt-8 flex flex-wrap items-center gap-3">
+              <a
+                {...bookProps}
+                className="inline-flex h-12 items-center gap-2 bg-gold px-6 text-xs font-medium tracking-[0.2em] text-navy uppercase transition-colors hover:bg-gold-soft"
+              >
+                {t.nav.book}
+                <ArrowUpRight size={16} />
+              </a>
+              {photos.length > 2 && (
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => scroll(-1)}
+                    aria-label={t.gallery.prev}
+                    className="flex size-12 items-center justify-center border border-clinic/25 transition-colors hover:border-gold hover:text-gold"
+                  >
+                    <ChevronLeft size={20} />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => scroll(1)}
+                    aria-label={t.gallery.next}
+                    className="flex size-12 items-center justify-center border border-clinic/25 transition-colors hover:border-gold hover:text-gold"
+                  >
+                    <ChevronRight size={20} />
+                  </button>
                 </div>
-                <figcaption className="mt-3 text-[11px] tracking-[0.18em] text-clinic/70 uppercase">
-                  {t.gallery.labels[i]}
-                </figcaption>
-              </figure>
-            ))}
+              )}
+            </div>
           </div>
+          <ul
+            ref={track}
+            className="flex snap-x snap-mandatory [scrollbar-width:none] gap-4 overflow-x-auto [&::-webkit-scrollbar]:hidden"
+          >
+            {photos.map((photo, i) => (
+              <li
+                key={photo.src}
+                className="shrink-0 basis-[calc(50%-0.5rem)] snap-start"
+              >
+                <figure>
+                  <button
+                    type="button"
+                    onClick={() => show(i)}
+                    aria-label={`${t.gallery.view}: ${label(photo)}`}
+                    className="group relative block aspect-[3/4] w-full cursor-zoom-in overflow-hidden bg-navy-deep outline-gold focus-visible:outline-2 focus-visible:outline-offset-2"
+                  >
+                    <Image
+                      src={photo.src}
+                      alt={label(photo)}
+                      fill
+                      sizes="(max-width: 1024px) 45vw, 25vw"
+                      className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                    />
+                  </button>
+                  <figcaption className="mt-3 text-[11px] tracking-[0.18em] text-clinic/70 uppercase">
+                    {label(photo)}
+                  </figcaption>
+                </figure>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
+
+      <dialog
+        ref={dialog}
+        onClose={() => setOpen(null)}
+        onClick={(e) => e.target === e.currentTarget && dialog.current?.close()}
+        onKeyDown={(e) => {
+          if (e.key === "ArrowLeft") step(-1)
+          if (e.key === "ArrowRight") step(1)
+        }}
+        aria-label={current ? label(current) : t.gallery.eyebrow}
+        className="m-auto size-full max-h-none max-w-none bg-navy-deep p-0 text-clinic backdrop:bg-navy-deep"
+      >
+        {current && (
+          <div
+            className="flex size-full flex-col items-center justify-center gap-4 p-4 sm:p-10"
+            onClick={(e) =>
+              e.target === e.currentTarget && dialog.current?.close()
+            }
+          >
+            <div className="relative min-h-0 w-full flex-1">
+              <Image
+                src={current.src}
+                alt={label(current)}
+                fill
+                sizes="100vw"
+                className="object-contain"
+              />
+            </div>
+            <div className="flex w-full max-w-xl items-center justify-between gap-4">
+              <button
+                type="button"
+                onClick={() => step(-1)}
+                aria-label={t.gallery.prev}
+                className="flex size-12 shrink-0 items-center justify-center border border-clinic/25 transition-colors hover:border-gold hover:text-gold"
+              >
+                <ChevronLeft size={20} />
+              </button>
+              <p className="text-center text-[11px] tracking-[0.18em] uppercase">
+                {label(current)}
+                <span className="ml-3 text-clinic/50">
+                  {open! + 1} / {photos.length}
+                </span>
+              </p>
+              <button
+                type="button"
+                onClick={() => step(1)}
+                aria-label={t.gallery.next}
+                className="flex size-12 shrink-0 items-center justify-center border border-clinic/25 transition-colors hover:border-gold hover:text-gold"
+              >
+                <ChevronRight size={20} />
+              </button>
+            </div>
+          </div>
+        )}
+        <button
+          type="button"
+          onClick={() => dialog.current?.close()}
+          aria-label={t.gallery.close}
+          className="absolute top-4 right-4 flex size-12 items-center justify-center border border-clinic/25 bg-navy-deep/60 transition-colors hover:border-gold hover:text-gold"
+        >
+          <X size={20} />
+        </button>
+      </dialog>
     </section>
   )
+}
+
+/** "03-acne_tratamiento" → "Acne tratamiento" (si falta el pie en i18n). */
+function labelFromKey(key: string) {
+  const words = key
+    .replace(/^\d+[-_ .]*/, "")
+    .replace(/[-_]+/g, " ")
+    .trim()
+  return words.charAt(0).toUpperCase() + words.slice(1)
 }
 
 /* ───────────────────────── About ───────────────────────── */
