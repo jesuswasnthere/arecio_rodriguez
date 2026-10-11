@@ -301,7 +301,7 @@ export function Gallery({ photos }: { photos: GalleryPhoto[] }) {
                       alt={label(photo)}
                       fill
                       sizes="(max-width: 1024px) 45vw, 25vw"
-                      className="object-contain transition-transform duration-500 group-hover:scale-[1.03]"
+                      className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                     />
                   </button>
                   <figcaption className="mt-3 text-[11px] tracking-[0.18em] text-clinic/70 uppercase">
