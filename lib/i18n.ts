@@ -200,7 +200,7 @@ const en = {
     hoursLabel: "Hours",
     hours: [
       { day: "Monday – Saturday", time: "By appointment" },
-      { day: "Sunday", time: "Closed" },
+      { day: "Sunday", time: "By appointment with deposit" },
     ],
     directions: "Get directions",
     parking:
@@ -415,7 +415,7 @@ const es: Dictionary = {
     hoursLabel: "Horario",
     hours: [
       { day: "Lunes – Sábado", time: "Con cita previa" },
-      { day: "Domingo", time: "Cerrado" },
+      { day: "Domingo", time: "Con cita previa y depósito" },
     ],
     directions: "Cómo llegar",
     parking:
