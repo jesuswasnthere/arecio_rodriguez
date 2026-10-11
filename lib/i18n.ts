@@ -139,6 +139,10 @@ const en = {
       "11-pdrn-exosomas": "Salmon PDRN + Exosomes with Microneedling",
       "12-limpieza-facial": "Deep Cleansing Facial",
       "13-limpieza-hidratacion": "Facial + Microdermabrasion + Deep Hydration",
+      "14-limpieza-peeling-quimico": "Deep Cleansing Facial + Chemical Peel",
+      "15-peeling-quimico": "Chemical Peel",
+      "16-mejora-de-piel": "Skin Improvement Treatment",
+      "17-microneedling-cicatrices": "Microneedling for Acne Scars",
     } as Record<string, string>,
   },
   about: {
@@ -349,6 +353,11 @@ const es: Dictionary = {
       "12-limpieza-facial": "Facial Profundo",
       "13-limpieza-hidratacion":
         "Limpieza Facial + Microdermoabrasión + Hidratación Profunda",
+      "14-limpieza-peeling-quimico":
+        "Limpieza Facial Profunda + Peeling Químico",
+      "15-peeling-quimico": "Peeling Químico",
+      "16-mejora-de-piel": "Tratamiento de Mejora de la Piel",
+      "17-microneedling-cicatrices": "Microneedling para Cicatrices de Acné",
     },
   },
   about: {
